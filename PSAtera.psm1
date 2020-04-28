@@ -35,6 +35,7 @@ function Set-AteraAPIKey {
     Get the Atera API Key in use by the module.
 #>
 function Get-AteraAPIKey {
+  if (!$AteraAPIKey) { Write-Error "`$AteraAPIKey not set. Set it with either Set-AteraAPIKey or `$env:ATERAAPIKEY"; exit 1 }
   return $AteraAPIKey
 }
 

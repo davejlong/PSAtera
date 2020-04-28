@@ -63,9 +63,11 @@ function Get-AteraTicketsFiltered {
   )
 
   return Get-AteraTickets | Where-Object {
-    if ($Open.IsPresent -and $_.TicketStatus -eq "Open") { return $true }
-    if ($Pending.IsPresent -and $_.TicketStatus -eq "Pending") { return $true }
-    if ($Resolved.IsPresent -and $_.TicketStatus -eq "Resolved") { return $true }
-    if ($Closed.IsPresent -and $_.TicketStatus -eq "Closed") { return $true }
+    $included = $false
+    if ($Open.IsPresent -and $_.TicketStatus -eq "Open") { $included = $true }
+    if ($Pending.IsPresent -and $_.TicketStatus -eq "Pending") { $included = $true }
+    if ($Resolved.IsPresent -and $_.TicketStatus -eq "Resolved") { $included = $true }
+    if ($Closed.IsPresent -and $_.TicketStatus -eq "Closed") { $included = $true }
+    return $included
   }
 }

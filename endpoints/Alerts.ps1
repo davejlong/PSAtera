@@ -25,11 +25,12 @@ function Get-AteraAlertsFiltered {
   )
 
   return Get-AteraAlerts | Where-Object {
-    if ($Open.IsPresent -and !$_.Archived) { return $true }
-    if ($Closed.IsPresent -and $_.Archived) { return $true }
+    if ($Open.IsPresent -and $_.Archived) { return $false}
+    if ($Closed.IsPresent -and !$_.Archived) { return $false }
 
-    if ($Information.IsPresent -and $_.Severity -eq "Information") { return $true }
-    if ($Warning.IsPresent -and $_.Severity -eq "Warning") { return $true }
-    if ($Critical.IsPresent -and $_.Severity -eq "Critical") { return $true }
+    if ($Information.IsPresent -and $_.Severity -ne "Information") { return $false }
+    if ($Warning.IsPresent -and $_.Severity -ne "Warning") { return $false }
+    if ($Critical.IsPresent -and $_.Severity -ne "Critical") { return $false }
+    return $true
   }
 }
