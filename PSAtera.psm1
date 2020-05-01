@@ -9,6 +9,7 @@ function New-GetRequest([string]$endpoint) {
   $index = 0
 
   do {
+    Write-Debug "[PSAtera] Request for $Uri"
     $data = Invoke-RestMethod -Uri $Uri -Method "GET" -Headers $Headers
     $items += $data.items
     $index += 1
