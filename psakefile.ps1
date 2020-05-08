@@ -15,3 +15,8 @@ Task FunctionsToExport {
     Update-ModuleManifest -Path ".\$($moduleName).psd1" -FunctionsToExport $functionNames
     Import-Module $moduleName -Force -Verbose:$false
 }
+
+Task Publish -depends FunctionsToExport {
+    $moduleName = Get-Item . | ForEach-Object BaseName
+    Publish-Module -Name ".\$($moduleName).psm1" -NuGetApiKey $env:NuGetAPIKey
+}

@@ -15,5 +15,6 @@ PS> Install-Module -Name PSAtera
 ## Development Plans
 
 * [x] Support all GET API requests for all endpoints
-* [In Progress] Add filtering arguments to requests to filter down items (i.e. only open tickets, critical alerts, server type agents)
-* [ ] Support POST requests on all endpoints
+* [x] Add filtering arguments to requests to filter down items (i.e. only open tickets, critical alerts, server type agents)
+* [x] Support POST requests on all endpoints
+* [ ] Support PUT requests on all endpoints
