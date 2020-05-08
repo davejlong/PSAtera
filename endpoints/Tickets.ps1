@@ -71,3 +71,36 @@ function Get-AteraTicketsFiltered {
     return $included
   }
 }
+
+function New-AteraTicket {
+  [CmdletBinding(DefaultParameterSetName='ExistingContact')]
+  param (
+    [Parameter(Mandatory)]
+    [string] $TicketTitle,
+    [Parameter(Mandatory)]
+    [string] $Description,
+    [Parameter(Mandatory, ParameterSetName='ExistingContact')]
+    [int] $EndUserID,
+    [Parameter(Mandatory, ParameterSetName='NewContact')]
+    [string] $EndUserFirstName,
+    [Parameter(Mandatory, ParameterSetName='NewContact')]
+    [string] $EndUserLastName,
+    [Parameter(Mandatory, ParameterSetName='NewContact')]
+    [string] $EndUserEmail,
+    [Parameter()]
+    [ValidateSet("Low", "Medium", "High", "Critical")]
+    [string] $TicketPriority,
+    [Parameter()]
+    [ValidateSet("NoImpact", "SiteDown", "ServerIssue", "Minor", "Major", "Crisis")]
+    [string] $TicketImpact,
+    [Parameter()]
+    [ValidateSet("Open", "Pending", "Resolved", "Closed")]
+    [string] $TicketStatus,
+    [Parameter()]
+    [ValidateSet("Problem" ,"Bug", "Request", "Other", "Incident", "Change")]
+    [string] $TicketType,
+    [Parameter()]
+    [int] $TechnicianContactID
+  )
+  New-PostRequest -Endpoint "/tickets" -Body $PSBoundParameters
+}
