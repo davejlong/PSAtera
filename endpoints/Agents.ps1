@@ -1,15 +1,10 @@
 function Get-AteraAgents {
   param(
-      # Customer ID to retrieve list of agents for
-       [Parameter(Mandatory=$false)][int]$CustomerID
+    # Customer ID to retrieve list of agents for
+    [Parameter(Mandatory)]
+    [int]$CustomerID
   )
-  if($CustomerID){
-    return New-GetRequest -Endpoint "/agents/$CustomerID"
-  }
-  else
-  {
-    return New-GetRequest -Endpoint "/agents"
-  }
+  return New-GetRequest -Endpoint "/agents/customer/$CustomerID"
 }
 
 function Get-AteraAgent {
@@ -18,9 +13,8 @@ function Get-AteraAgent {
   ##############
   param(
     # ID of agent to retrieve
-    [Parameter(Mandatory=$false,ParameterSetName=’ID’)][int]$ID
-    # Machine Name; Default hostname of PC
-    [Parameter(Mandatory=$false,ParameterSetName=’MachineName’)][string]$MachineName=$env:COMPUTERNAME
+    [Parameter(Mandatory)]
+    [int]$ID
   )
   if($ID){
     return New-GetRequest -Endpoint "/agents/$AgentID"
@@ -30,4 +24,12 @@ function Get-AteraAgent {
   }
 }
 
- 
+function Get-AteraAgent {
+  param(
+    # Hostname of machine to retrieve. Defaults to current device host name
+    [Parameter()]
+    [string]$MachineName=$env:COMPUTERNAME
+  )
+  
+  return New-GetRequest -Endpoint "/agents/machine/$MachineName"
+}

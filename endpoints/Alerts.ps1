@@ -5,6 +5,7 @@ function Get-AteraAlerts {
 function Get-AteraAlert {
   param(
     # ID of Alert to retrieve  
+    [Parameter(Mandatory)]
     [int]$ID
   )
   return New-GetRequest -Endpoint "/alerts/$alertId"
@@ -33,4 +34,41 @@ function Get-AteraAlertsFiltered {
     if ($Critical.IsPresent -and $_.Severity -ne "Critical") { return $false }
     return $true
   }
+}
+
+function New-AteraAlert {
+  [CmdletBinding()]
+  param (
+    [Parameter(Mandatory)]
+    [string] $DeviceGuid,
+    [Parameter(Mandatory)]
+    [int]$CustomerID,
+    [Parameter(Mandatory)]
+    [string] $Title,
+    [ValidateSet("Information","Warning","Critical")]
+    [string] $Severity,
+    [ValidateSet("Hardware","Disk","Availability","Performance","Exchange","General")]
+    [string] $AlertCategoryID,
+    [string] $AlertMessage,
+    [int] $TicketID,
+    # ?
+    [int] $Code,
+    # ?
+    [string] $ThresholdValue1,
+    # ?
+    [string] $ThresholdValue2,
+    # ?
+    [string] $ThresholdValue3,
+    # ?
+    [string] $ThresholdValue4,
+    # ?
+    [string] $ThresholdValue5,
+    [DateTime] $SnoozedEndDate,
+    [string] $AdditionalInfo,
+    # ?
+    [string] $MessageTemplate,
+    # ?
+    [int] $FolderID
+  )
+  New-PostRequest -Endpoint "/alerts" -Body $PSBoundParameters
 }

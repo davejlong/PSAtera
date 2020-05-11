@@ -18,6 +18,17 @@ function New-GetRequest([string]$endpoint) {
   return $items
 }
 
+function New-PostRequest([string]$endpoint, [Hashtable]$body) {
+  $Headers = @{
+    "accept" = "application/json"
+    "X-API-KEY" = Get-AteraAPIKey
+  }
+  $Uri = "https://app.atera.com/api/v3$($endpoint)"
+  Write-Debug "[PSAtera] Request for $Uri"
+  $data = Invoke-RestMethod -Uri $Uri -Method "POST" -Headers $Headers -Body $body
+  return $data
+}
+
 $AteraAPIKey = $env:ATERAAPIKEY
 <#
   .SYNOPSIS
@@ -63,4 +74,4 @@ function Get-AteraRecordLimit {
 
 Get-ChildItem -Path $PSScriptRoot/endpoints | ForEach-Object { . $_.PSPath }
 
-Export-ModuleMember -Function Get-Atera*,Set-Atera*
+Export-ModuleMember -Function Get-Atera*,Set-Atera*,New-Atera*
