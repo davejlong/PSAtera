@@ -2,6 +2,13 @@ function Get-AteraCustomers {
   return New-GetRequest -Endpoint "/customers"
 }
 
+function Get-AteraCustomer {
+  param(
+    [Parameter(Mandatory=$true)][int]$CustomerID
+  )
+  return New-GetRequest -Endpoint "/customers/$($CustomerID)"
+}
+
 function New-AteraCustomer {
   [CmdletBinding()]
   param (
