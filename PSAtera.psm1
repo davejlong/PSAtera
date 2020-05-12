@@ -1,4 +1,11 @@
-function New-GetRequest([string]$endpoint) {
+function New-AteraGetRequest {
+  [CmdletBinding()]
+  param (
+    [Parameter(Mandatory)]
+    [string] $Endpoint,
+    [Parameter()]
+    [bool] $Paginate=$true
+  )
   $Headers = @{
     "accept" = "application/json"
     "X-API-KEY" = Get-AteraAPIKey
@@ -11,6 +18,7 @@ function New-GetRequest([string]$endpoint) {
   do {
     Write-Debug "[PSAtera] Request for $Uri"
     $data = Invoke-RestMethod -Uri $Uri -Method "GET" -Headers $Headers
+    if (!$Paginate) { return $data }
     $items += $data.items
     $index += 1
     $Uri = $data.nextLink
@@ -18,7 +26,14 @@ function New-GetRequest([string]$endpoint) {
   return $items
 }
 
-function New-PostRequest([string]$endpoint, [Hashtable]$body) {
+function New-AteraPostRequest {
+  [CmdletBinding()]
+  param (
+    [Parameter(Mandatory)]
+    [string] $Endpoint,
+    [Parameter(Mandatory, ValueFromPipeline)]
+    [Hashtable] $Body
+  )
   $Headers = @{
     "accept" = "application/json"
     "X-API-KEY" = Get-AteraAPIKey

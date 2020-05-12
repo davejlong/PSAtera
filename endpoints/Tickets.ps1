@@ -1,5 +1,5 @@
 function Get-AteraTickets {
-  return New-GetRequest -Endpoint "/tickets"
+  return New-AteraGetRequest -Endpoint "/tickets"
 }
 
 function Get-AteraTicket {
@@ -7,7 +7,7 @@ function Get-AteraTicket {
     # ID of ticket to retrieve
     [int]$ID
   )
-  return New-GetRequest -Endpoint "/tickets/$ID"
+  return New-AteraGetRequest -Endpoint "/tickets/$ID"
 }
 
 function Get-AteraTicketBillableDuration {
@@ -15,7 +15,7 @@ function Get-AteraTicketBillableDuration {
     # ID of ticket to retrieve
     [int]$ID
   )
-  return New-GetRequest -Endpoint "/tickets/$ID/billableduration"
+  return New-AteraGetRequest -Endpoint "/tickets/$ID/billableduration"
 }
 
 function Get-AteraTicketNonBillableDuration {
@@ -23,7 +23,7 @@ function Get-AteraTicketNonBillableDuration {
     # ID of ticket to retrieve
     [int]$ID
   )
-  return New-GetRequest -Endpoint "/tickets/$ID/nonbillableduration"
+  return New-AteraGetRequest -Endpoint "/tickets/$ID/nonbillableduration"
 }
 
 function Get-AteraTicketWorkHours {
@@ -31,7 +31,7 @@ function Get-AteraTicketWorkHours {
     # ID of ticket to retrieve
     [int]$ID
   )
-  return New-GetRequest -Endpoint "/tickets/$ID/workhours"
+  return New-AteraGetRequest -Endpoint "/tickets/$ID/workhours"
 }
 
 function Get-AteraTicketWorkHoursList {
@@ -39,7 +39,7 @@ function Get-AteraTicketWorkHoursList {
     # ID of ticket to retrieve
     [int]$ID
   )
-  return New-GetRequest -Endpoint "/tickets/$ID/workhoursrecords"
+  return New-AteraGetRequest -Endpoint "/tickets/$ID/workhoursrecords"
 }
 
 function Get-AteraTicketComments {
@@ -47,7 +47,7 @@ function Get-AteraTicketComments {
     # ID of ticket to retrieve
     [int]$ID
   )
-  return New-GetRequest -Endpoint "/tickets/$ID/comments"
+  return New-AteraGetRequest -Endpoint "/tickets/$ID/comments"
 }
 
 function Get-AteraTicketsFiltered {
@@ -102,5 +102,5 @@ function New-AteraTicket {
     [Parameter()]
     [int] $TechnicianContactID
   )
-  New-PostRequest -Endpoint "/tickets" -Body $PSBoundParameters
+  New-AteraPostRequest -Endpoint "/tickets" -Body $PSBoundParameters
 }

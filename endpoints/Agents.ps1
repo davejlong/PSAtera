@@ -4,7 +4,7 @@ function Get-AteraAgents {
     [Parameter(Mandatory=$true)]
     [int]$CustomerID
   )
-  return New-GetRequest -Endpoint "/agents/customer/$CustomerID"
+  return New-AteraGetRequest -Endpoint "/agents/customer/$CustomerID"
 }
 
 function Get-AteraAgent {
@@ -20,9 +20,9 @@ function Get-AteraAgent {
     [string]$MachineName=$env:COMPUTERNAME
   )	  
   if($ID){
-    return New-GetRequest -Endpoint "/agents/$AgentID"
+    return New-AteraGetRequest -Endpoint "/agents/$AgentID"
   }
   if($MachineName){
-    return New-GetRequest -Endpoint "/agents/machine/$MachineName"
+    return New-AteraGetRequest -Endpoint "/agents/machine/$MachineName"
   }
 }

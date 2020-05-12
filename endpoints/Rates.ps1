@@ -1,8 +1,8 @@
 function Get-AteraProducts {
-  return New-GetRequest -Endpoint "/rates/products"
+  return New-AteraGetRequest -Endpoint "/rates/products"
 }
 function Get-AteraExpenses {
-  return New-GetRequest -Endpoint "/rates/expenses"
+  return New-AteraGetRequest -Endpoint "/rates/expenses"
 }
 
 function New-AteraProduct {
@@ -17,7 +17,7 @@ function New-AteraProduct {
     [Parameter()]
     [string] $SKU
   )
-  New-PostRequest -Endpoint "/rates/products" -Body $PSBoundParameters
+  New-AteraPostRequest -Endpoint "/rates/products" -Body $PSBoundParameters
 }
 
 function New-AteraExpense {
@@ -32,5 +32,5 @@ function New-AteraExpense {
     [Parameter()]
     [string] $SKU
   )
-  New-PostRequest -Endpoint "/rates/expenses" -Body $PSBoundParameters
+  New-AteraPostRequest -Endpoint "/rates/expenses" -Body $PSBoundParameters
 }

@@ -1,5 +1,5 @@
 function Get-AteraCustomers {
-  return New-GetRequest -Endpoint "/customers"
+  return New-AteraGetRequest -Endpoint "/customers"
 }
 
 function Get-AteraCustomer {
@@ -7,7 +7,7 @@ function Get-AteraCustomer {
     [Parameter(Mandatory=$true)]
     [int]$CustomerID
   )
-  return New-GetRequest -Endpoint "/customers/$($CustomerID)"
+  return New-AteraGetRequest -Endpoint "/customers/$($CustomerID)"
 }
 
 function New-AteraCustomer {
@@ -42,5 +42,5 @@ function New-AteraCustomer {
     [Parameter()]
     [string] $ZipCodeStr
   )
-  New-PostRequest -Endpoint "/customers" -Body $PSBoundParameters
+  New-AteraPostRequest -Endpoint "/customers" -Body $PSBoundParameters
 }

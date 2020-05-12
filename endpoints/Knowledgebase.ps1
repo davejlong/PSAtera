@@ -1,3 +1,3 @@
 function Get-AteraKnowledgebase {
-  return New-GetRequest -Endpoint "/knowledgebases"
+  return New-AteraGetRequest -Endpoint "/knowledgebases"
 }

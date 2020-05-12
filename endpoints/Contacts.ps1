@@ -1,5 +1,5 @@
 function Get-AteraContacts {
-  return New-GetRequest -Endpoint "/contacts"
+  return New-AteraGetRequest -Endpoint "/contacts"
 }
 
 function New-AteraContact {
@@ -24,5 +24,5 @@ function New-AteraContact {
     [Parameter()]
     [string] $InIgnoreMode
   )
-  New-PostRequest -Endpoint "/contacts" -Body $PSBoundParameters
+  New-AteraPostRequest -Endpoint "/contacts" -Body $PSBoundParameters
 }

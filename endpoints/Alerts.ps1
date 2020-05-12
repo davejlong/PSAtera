@@ -1,5 +1,5 @@
 function Get-AteraAlerts {
-  return New-GetRequest -Endpoint "/alerts"
+  return New-AteraGetRequest -Endpoint "/alerts"
 }
 
 function Get-AteraAlert {
@@ -8,7 +8,7 @@ function Get-AteraAlert {
     [Parameter(Mandatory)]
     [int]$ID
   )
-  return New-GetRequest -Endpoint "/alerts/$alertId"
+  return New-AteraGetRequest -Endpoint "/alerts/$alertId"
 }
 
 function Get-AteraAlertsFiltered {
@@ -70,5 +70,5 @@ function New-AteraAlert {
     # ?
     [int] $FolderID
   )
-  New-PostRequest -Endpoint "/alerts" -Body $PSBoundParameters
+  New-AteraPostRequest -Endpoint "/alerts" -Body $PSBoundParameters
 }

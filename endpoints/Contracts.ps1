@@ -1,3 +1,3 @@
 function Get-AteraContracts {
-  return New-GetRequest -Endpoint "/contracts"
+  return New-AteraGetRequest -Endpoint "/contracts"
 }
