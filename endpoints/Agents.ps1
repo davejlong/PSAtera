@@ -1,10 +1,12 @@
 function Get-AteraAgents {
   param(
     # Customer ID to retrieve list of agents for
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory=$false)]
     [int]$CustomerID
   )
-  return New-AteraGetRequest -Endpoint "/agents/customer/$CustomerID"
+  $uri = "/agents"
+  if ($CustomerID) { $uri = "$uri/customer/$CustomerID" }
+  return New-AteraGetRequest -Endpoint $uri
 }
 
 function Get-AteraAgent {

@@ -2,6 +2,14 @@ function Get-AteraContacts {
   return New-AteraGetRequest -Endpoint "/contacts"
 }
 
+function Get-AteraContact {
+  param (
+    [Parameter(Mandatory)]
+    [int] $ContactID
+  )
+  return New-AteraGetRequest -Endpoint "/contacts/$ContactID"
+}
+
 function New-AteraContact {
   [CmdletBinding(DefaultParameterSetName='ByCustomerID')]
   param (

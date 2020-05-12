@@ -1,8 +1,25 @@
 function Get-AteraProducts {
   return New-AteraGetRequest -Endpoint "/rates/products"
 }
+
 function Get-AteraExpenses {
   return New-AteraGetRequest -Endpoint "/rates/expenses"
+}
+
+function Get-AteraProduct {
+  param (
+    [Parameter(Mandatory)]
+    [int] $ProductID
+  )
+  return New-AteraGetRequest -Endpoint "/rates/products/$ProductID"
+}
+
+function Get-AteraExpense {
+  param (
+    [Parameter(Mandatory)]
+    [int] $ExpenseID
+  )
+  return New-AteraGetRequest -Endpoint "/rates/expenses/$ExpenseID"
 }
 
 function New-AteraProduct {

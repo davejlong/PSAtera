@@ -5,49 +5,49 @@ function Get-AteraTickets {
 function Get-AteraTicket {
   param(
     # ID of ticket to retrieve
-    [int]$ID
+    [int]$TicketID
   )
-  return New-AteraGetRequest -Endpoint "/tickets/$ID"
+  return New-AteraGetRequest -Endpoint "/tickets/$TicketID"
 }
 
 function Get-AteraTicketBillableDuration {
   param(
     # ID of ticket to retrieve
-    [int]$ID
+    [int]$TicketID
   )
-  return New-AteraGetRequest -Endpoint "/tickets/$ID/billableduration"
+  return New-AteraGetRequest -Endpoint "/tickets/$TicketID/billableduration"
 }
 
 function Get-AteraTicketNonBillableDuration {
   param(
     # ID of ticket to retrieve
-    [int]$ID
+    [int]$TicketID
   )
-  return New-AteraGetRequest -Endpoint "/tickets/$ID/nonbillableduration"
+  return New-AteraGetRequest -Endpoint "/tickets/$TicketID/nonbillableduration"
 }
 
 function Get-AteraTicketWorkHours {
   param(
     # ID of ticket to retrieve
-    [int]$ID
+    [int]$TicketID
   )
-  return New-AteraGetRequest -Endpoint "/tickets/$ID/workhours"
+  return New-AteraGetRequest -Endpoint "/tickets/$TicketID/workhours"
 }
 
 function Get-AteraTicketWorkHoursList {
   param(
     # ID of ticket to retrieve
-    [int]$ID
+    [int]$TicketID
   )
-  return New-AteraGetRequest -Endpoint "/tickets/$ID/workhoursrecords"
+  return New-AteraGetRequest -Endpoint "/tickets/$TicketID/workhoursrecords"
 }
 
 function Get-AteraTicketComments {
   param(
     # ID of ticket to retrieve
-    [int]$ID
+    [int]$TicketID
   )
-  return New-AteraGetRequest -Endpoint "/tickets/$ID/comments"
+  return New-AteraGetRequest -Endpoint "/tickets/$TicketID/comments"
 }
 
 function Get-AteraTicketsFiltered {
