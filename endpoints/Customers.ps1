@@ -4,7 +4,8 @@ function Get-AteraCustomers {
 
 function Get-AteraCustomer {
   param(
-    [Parameter(Mandatory=$true)][int]$CustomerID
+    [Parameter(Mandatory=$true)]
+    [int]$CustomerID
   )
   return New-GetRequest -Endpoint "/customers/$($CustomerID)"
 }
