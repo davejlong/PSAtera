@@ -9,7 +9,7 @@ Task FunctionsToExport {
             $ast.EndBlock.Statements.Name
         }
     }
-    $functionNames += @("Install-AteraAgent", "Get-AteraAPIKey", "Set-AteraAPIKey", "Get-AteraRecordLimit", "Set-AteraRecordLimit")
+    $functionNames += @("Install-AteraAgent", "Get-AteraAPIKey", "Set-AteraAPIKey", "Get-AteraRecordLimit", "Set-AteraRecordLimit", "New-AteraGetRequest", "New-AteraPostRequest")
     Write-Verbose "Using functions $functionNames"
 
     Update-ModuleManifest -Path ".\$($moduleName).psd1" -FunctionsToExport $functionNames

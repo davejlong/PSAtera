@@ -1,3 +1,10 @@
+
+<#
+  .Synopsis
+  Get list of contracts from the API
+  
+  .Parameter CustomerID
+#>
 function Get-AteraContracts {
   param (
     [Parameter()]
@@ -8,7 +15,13 @@ function Get-AteraContracts {
   return New-AteraGetRequest -Endpoint $uri
 }
 
-function Get-AteraContracts {
+<#
+  .Synopsis
+  Get a single contract from the API
+  
+  .Parameter ContractID
+#>
+function Get-AteraContract {
   param (
     [Parameter()]
     [int] $ContractID

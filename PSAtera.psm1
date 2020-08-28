@@ -9,12 +9,12 @@
   Whether to paginate the request. If set to false, will only query the first page of results.
   
   .Example
-  # Get a customer
   New-AteraGetRequest -Endpoint "/customers/3"
+  # Get a customer
 
   .Example
-  # Get a custom value (which needs to not paginate)
   New-AteraGetRequest -Endpoint "/customvalues/ticketfield/2/Product%20Family" -Paginate $false
+  # Get a custom value (which needs to not paginate)
 #>
 function New-AteraGetRequest {
   [CmdletBinding()]
@@ -57,8 +57,8 @@ function New-AteraGetRequest {
   Hashtable of data to send in POST request
 
   .Example
-  # Create a new Contact
   New-AteraPostRequest -Endpoint "/contacts" -Body @{CustomerID=5; Email="john@example.com"}
+  # Create a new Contact
 #>
 function New-AteraPostRequest {
   [CmdletBinding()]
@@ -140,15 +140,15 @@ function Get-AteraRecordLimit {
   Your Atera username
 
   .Parameter CustomerID
-  Customer ID to assign agent to
+  Customer ID to assign agent to. If not provided, assigned agent to the Unassigned customer in Atera
 
   .Example
-  # Install agent
   Install-AteraAgent -Subdomain example -IntegratorLogin john@example.com -CustomerID 2
+  # Install agent
 
   .Example
-  # Search for a customer to install the agent for
   Get-AteraCustomers | Where CustomerName -eq "Contoso" | Install-AteraAgent -Subdomain example -IntegratorLogin john@example.com
+  # Search for a customer to install the agent for
 #>
 function Install-AteraAgent {
   param (
@@ -156,8 +156,8 @@ function Install-AteraAgent {
     [string] $Subdomain,
     [Parameter(Mandatory)]
     [string] $IntegratorLogin,
-    [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
-    [int] $CustomerID=0
+    [Parameter(ValueFromPipelineByPropertyName)]
+    [int] $CustomerID = 0
   )
   if (Get-Service -Name "AteraAgent" -ErrorAction SilentlyContinue) {
     Write-Host "Atera Agent already installed."
