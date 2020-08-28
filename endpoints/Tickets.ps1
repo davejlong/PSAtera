@@ -187,3 +187,56 @@ function New-AteraTicket {
   )
   New-AteraPostRequest -Endpoint "/tickets" -Body $PSBoundParameters
 }
+
+<#
+  .Synopsis
+  Updates details about a ticket
+  
+  .Parameter TicketID
+  ID of the ticket to update
+  .Parameter TicketTitle
+  New title for ticket
+  .Parameter TicketStatus
+  New status for ticket (Options: Open, Pending, Resolved, Closed)
+  .Parameter TicketType
+  New type for ticket (Options: Problem, Bug, Question, Request, Other, Incident, Change)
+  .Parameter TicketPriority
+  New priority for ticket (Options: Low, Medium, High, Critical)
+  .Parameter TicketImpact
+  New impact for ticket (Options: NoImpact, SiteDown, ServiceIssue, Minor, Major, Crisis)
+  .Parameter TechnicianContactID
+  New technician ID to assign ticket to
+#>
+function Set-AteraTicket {
+  [CmdletBinding()]
+  param (
+    [Parameter(Mandatory)]
+    [string] $TicketID,
+    [Parameter()]
+    [string] $TicketTitle,
+    [Parameter()]
+    [ValidateSet("Open", "Pending", "Resolved", "Closed")]
+    [string] $TicketStatus,
+    [Parameter()]
+    [ValidateSet("Problem" ,"Bug", "Request", "Other", "Incident", "Change")]
+    [string] $TicketType,
+    [Parameter()]
+    [ValidateSet("Low", "Medium", "High", "Critical")]
+    [string] $TicketPriority,
+    [Parameter()]
+    [ValidateSet("NoImpact", "SiteDown", "ServerIssue", "Minor", "Major", "Crisis")]
+    [string] $TicketImpact,
+    [Parameter()]
+    [int] $TechnicianContactID
+  )
+  $Body = @{}
+  if ($TickeTitle -ne "") { $Body["TicketTitle"] = $TicketTitle }
+  if ($TicketStatus -ne "") { $Body.TicketStatus = $TicketStatus }
+  if ($TicketType -ne "") { $Body.TicketType = $TicketType }
+  if ($TicketPriority -ne "") { $Body.TicketPriority = $TicketPriority }
+  if ($TicketImpact -ne "") { $Body.TicketImpact = $TicketImpact }
+  if ($TechnicianContactID -ne "") { $Body.TechnicianContactID = $TechnicianContactID }
+  if (!$Body.Count) { throw "At least one update parameter needs to be set" }
+ 
+  New-AteraPostRequest -Endpoint "/tickets/$($TicketID)" -Body $Body
+}
