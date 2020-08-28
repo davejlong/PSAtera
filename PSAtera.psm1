@@ -24,11 +24,9 @@ function New-AteraGetRequest {
     [Parameter()]
     [bool] $Paginate=$true
   )
-  $ApiKey = Get-AteraAPIKey
-  if (!$ApiKey) { return }
   $Headers = @{
     "accept" = "application/json"
-    "X-API-KEY" = $ApiKey
+    "X-API-KEY" = Get-AteraAPIKey
   }
   $ItemsInPage = 50
   $Uri = "https://app.atera.com/api/v3$($endpoint)?itemsInPage=$ItemsInPage"
@@ -68,11 +66,9 @@ function New-AteraPostRequest {
     [Parameter(Mandatory, ValueFromPipeline)]
     [Hashtable] $Body
   )
-  $ApiKey = Get-AteraAPIKey
-  if (!$ApiKey) { return; }
   $Headers = @{
     "accept" = "application/json"
-    "X-API-KEY" = $ApiKey
+    "X-API-KEY" = Get-AteraAPIKey
   }
   $Uri = "https://app.atera.com/api/v3$($endpoint)"
   Write-Debug "[PSAtera] Request for $Uri"
@@ -101,7 +97,7 @@ function Set-AteraAPIKey {
   Get the Atera API Key in use by the module.
 #>
 function Get-AteraAPIKey {
-  if (!$AteraAPIKey) { Write-Error "`$AteraAPIKey not set. Set it with either Set-AteraAPIKey or `$env:ATERAAPIKEY"; return $false }
+  if (!$AteraAPIKey) { throw "`$AteraAPIKey not set. Set it with either Set-AteraAPIKey or `$env:ATERAAPIKEY" }
   return $AteraAPIKey
 }
 
