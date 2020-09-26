@@ -18,7 +18,7 @@ function Get-AteraContact {
     [Parameter(Mandatory)]
     [int] $ContactID
   )
-  return New-AteraGetRequest -Endpoint "/contacts/$ContactID"
+  return New-AteraGetRequest -Endpoint "/contacts/$ContactID" -Paginate $false
 }
 
 <#

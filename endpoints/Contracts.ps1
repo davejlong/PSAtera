@@ -26,5 +26,5 @@ function Get-AteraContract {
     [Parameter()]
     [int] $ContractID
   )
-  return New-AteraGetRequest -Endpoint "/contracts/$ContractID"
+  return New-AteraGetRequest -Endpoint "/contracts/$ContractID" -Paginate $false
 }

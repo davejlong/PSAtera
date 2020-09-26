@@ -26,7 +26,7 @@ function Get-AteraProduct {
     [Parameter(Mandatory)]
     [int] $ProductID
   )
-  return New-AteraGetRequest -Endpoint "/rates/products/$ProductID"
+  return New-AteraGetRequest -Endpoint "/rates/products/$ProductID" -Paginate $false
 }
 
 <#
@@ -40,7 +40,7 @@ function Get-AteraExpense {
     [Parameter(Mandatory)]
     [int] $ExpenseID
   )
-  return New-AteraGetRequest -Endpoint "/rates/expenses/$ExpenseID"
+  return New-AteraGetRequest -Endpoint "/rates/expenses/$ExpenseID" -Paginate $false
 }
 
 <#

@@ -18,7 +18,7 @@ function Get-AteraTicket {
     # ID of ticket to retrieve
     [int]$TicketID
   )
-  return New-AteraGetRequest -Endpoint "/tickets/$TicketID"
+  return New-AteraGetRequest -Endpoint "/tickets/$TicketID" -Paginate $false
 }
 
 <#

@@ -63,8 +63,8 @@ function Get-AteraAgent {
     [Parameter(Mandatory=$false,ParameterSetName="MachineName")]
     [string]$MachineName=$env:COMPUTERNAME
   )
-  if($ID){
-    return New-AteraGetRequest -Endpoint "/agents/$AgentID"
+  if($AgentID){
+    return New-AteraGetRequest -Endpoint "/agents/$AgentID" -Paginate $false
   }
   if($MachineName){
     return New-AteraGetRequest -Endpoint "/agents/machine/$MachineName"

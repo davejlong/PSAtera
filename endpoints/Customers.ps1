@@ -19,7 +19,7 @@ function Get-AteraCustomer {
     [Parameter(Mandatory=$true)]
     [int] $CustomerID
   )
-  return New-AteraGetRequest -Endpoint "/customers/$CustomerID"
+  return New-AteraGetRequest -Endpoint "/customers/$CustomerID" -Paginate $false
 }
 
 <#

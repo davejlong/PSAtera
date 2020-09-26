@@ -3,7 +3,7 @@
   Get invoices from Atera
 #>
 function Get-AteraInvoices {
-  return New-AteraGetRequest -Endpoint "/invoices"
+  return New-AteraGetRequest -Endpoint "/billing/invoices"
 }
 
 <#
@@ -17,5 +17,5 @@ function Get-AteraInvoice {
     [Parameter(Mandatory)]
     [int] $InvoiceNumber
   )
-  return New-AteraGetRequest -Endpoint "/invoices/$InvoiceNumber"
+  return New-AteraGetRequest -Endpoint "/billing/invoices/$InvoiceNumber" -Paginate $false
 }

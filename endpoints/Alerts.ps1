@@ -14,9 +14,9 @@ function Get-AteraAlert {
   param(
     # ID of Alert to retrieve
     [Parameter(Mandatory)]
-    [int]$ID
+    [int]$AlertID
   )
-  return New-AteraGetRequest -Endpoint "/alerts/$ID"
+  return New-AteraGetRequest -Endpoint "/alerts/$AlertID" -Paginate $false
 }
 
 <#
