@@ -10,7 +10,7 @@ function Get-AteraContacts {
 <#
   .Synopsis
   Get a single contact by it's ID
-  
+
   .Parameter ContactID
 #>
 function Get-AteraContact {

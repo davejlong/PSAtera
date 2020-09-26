@@ -1,13 +1,13 @@
 <#
   .Synopsis
   Generic command for making GET requests against the Atera API
-  
+
   .Parameter Endpoint
   Endpoint to request, beginning with a /
-  
+
   .Parameter Paginate
   Whether to paginate the request. If set to false, will only query the first page of results.
-  
+
   .Example
   New-AteraGetRequest -Endpoint "/customers/3"
   # Get a customer
@@ -47,7 +47,7 @@ function New-AteraGetRequest {
 <#
   .Synopsis
   Generic command for making POST requests against the Atera API
-  
+
   .Parameter Endpoint
   Endpoint to request, beginning with a /
 
@@ -80,7 +80,7 @@ $AteraAPIKey = $env:ATERAAPIKEY
 <#
   .Synopsis
   Set the Atera API Key used by the module. If none set, the ATERAAPIKEY environment variable will be used instead.
-  
+
   .Parameter APIKey
   Atera API Key which can be found at https://app.atera.com/Admin#/admin/api
 #>
@@ -156,7 +156,7 @@ function Install-AteraAgent {
     [int] $CustomerID = 0
   )
   if (Get-Service -Name "AteraAgent" -ErrorAction SilentlyContinue) {
-    Write-Host "Atera Agent already installed."
+    Write-Output "Atera Agent already installed."
     return
   }
 
@@ -165,8 +165,8 @@ function Install-AteraAgent {
   Invoke-WebRequest -Uri "http://$Subdomain.atera.com/GetAgent/Msi/?CustomerID=$CustomerID&IntegratorLogin=$IntegratorLogin" -OutFile $TempFile
   Write-Debug "Installing Atera"
   $proc = Start-Process (Join-Path -Path $env:SystemRoot -ChildPath "system32\msiexec.exe") -PassThru -Wait -ArgumentList "/I","$TempFile","/quiet"
-  Write-Host "Exit code: $($proc.ExitCode)"
-  if ($proc.ExitCode -eq 0) { Write-Host "Atera Agent installed" -ForegroundColor Green }
+  Write-Debug "Exit code: $($proc.ExitCode)"
+  if ($proc.ExitCode -eq 0) { Write-Output "Atera Agent installed" -ForegroundColor Green }
   else { Write-Error "Installation failed with exit code $($proc.ExitCode)" -Category InvalidResult }
 }
 

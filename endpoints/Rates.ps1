@@ -18,7 +18,7 @@ function Get-AteraExpenses {
 <#
   .Synopsis
   Get a single product by it's ID
-  
+
   .Parameter ProductID
 #>
 function Get-AteraProduct {
@@ -46,7 +46,7 @@ function Get-AteraExpense {
 <#
   .Synopsis
   Create a new product
-  
+
   .Parameter Description
   Name to give the product
   .Parameter Category
@@ -74,7 +74,7 @@ function New-AteraProduct {
 <#
   .Synopsis
   Create a new expense in Atera
-  
+
   .Parameter Description
   Name to give the expense
   .Parameter Category

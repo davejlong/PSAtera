@@ -12,32 +12,32 @@ function Get-AteraAlerts {
 #>
 function Get-AteraAlert {
   param(
-    # ID of Alert to retrieve  
+    # ID of Alert to retrieve
     [Parameter(Mandatory)]
     [int]$ID
   )
-  return New-AteraGetRequest -Endpoint "/alerts/$alertId"
+  return New-AteraGetRequest -Endpoint "/alerts/$ID"
 }
 
 <#
   .Synopsis
   Filter alerts based on status and severity
-  
+
   .Parameter Open
   Turn on to retrieve Open alerts
 
   .Parameter Closed
   Turn on to retrieve Closed alerts
-  
+
   .Parameter Information
   Turn on to retrieve alerts with Information severity
-  
+
   .Parameter Warning
   Turn on to retrieve alerts with Warning severity
-  
+
   .Parameter Critical
   Turn on to retrieve alerts with Critical severity
-  
+
   .Example
   Get-AteraAlertsFiltered -Open -Critical
   # Retrieve all open critical alerts
@@ -74,7 +74,7 @@ function Get-AteraAlertsFiltered {
 <#
   .Synopsis
   Creates a new Atera alert
-  
+
   .Parameter DeviceGuid
   ID of the agent to open alert against. Can be retrieved from Atera Agents endpoint
   .Parameter CustomerID
@@ -109,13 +109,13 @@ function Get-AteraAlertsFiltered {
   ?
   .Parameter FolderID
   ?
-  
+
   .Example
   $BatteryReport = Join-Path $env:TEMP "batteryreport.xml"
   $Proc = Start-Process -FilePath powercfg.exe -ArgumentList "/batteryreport /xml /output $($BatteryReport)" -PassThru -NoNewWindow -Wait
 
   if ($Proc.ExitCode -eq 1) {
-    Write-Host "No battery present"
+    Write-Output "No battery present"
     exit
   }
 
@@ -126,7 +126,7 @@ function Get-AteraAlertsFiltered {
   $BatteryHealth = $MaxCharge / $DesignCapacity
 
   if ($BatteryHealth -gt 0.5) {
-    Write-Host "Battery is charging to $([math]::Round($BatteryHealth*100, 2))% of designed capacity"
+    Write-Output "Battery is charging to $([math]::Round($BatteryHealth*100, 2))% of designed capacity"
     exit
   }
   # Create the alert saving the charge percentage in Threshold Value 1, the Max Charge in Threshold Value 2 and the Designed capacity in Threshold Value 3

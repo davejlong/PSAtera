@@ -1,10 +1,10 @@
 <#
   .Synopsis
   Get's a list of agents from Atera
-  
+
   .Parameter CustomerID
   A Customer ID to filter down agents to
-  
+
   .Example
   Get-AteraAgents | Where-Object { $_.OSType -eq "Domain Controller"}
   # Get all domain controllers
@@ -31,10 +31,10 @@ function Get-AteraAgents {
 <#
   .Synopsis
   Gets information about a single agents
-  
+
   .Parameter AgentID
   The ID of the agent to retrieve
-  
+
   .Parameter MachineName
   Hostname of the agent to retrieve (defaults to current hostname)
 
@@ -55,14 +55,14 @@ function Get-AteraAgent {
   ##############
   # If no param is given the function will get the current PC
   ##############
-  param(	 
+  param(
     # ID of agent to retrieve
     [Parameter(Mandatory=$false,ParameterSetName="AgentID")]
     [int]$AgentID,
     # Machine Name; Default hostname of PC
     [Parameter(Mandatory=$false,ParameterSetName="MachineName")]
     [string]$MachineName=$env:COMPUTERNAME
-  )	  
+  )
   if($ID){
     return New-AteraGetRequest -Endpoint "/agents/$AgentID"
   }

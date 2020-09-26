@@ -2,7 +2,7 @@
 <#
   .Synopsis
   Get a list of customers from the API
-  
+
 #>
 function Get-AteraCustomers {
   return New-AteraGetRequest -Endpoint "/customers"
@@ -25,7 +25,7 @@ function Get-AteraCustomer {
 <#
   .Synopsis
   Creates a new Customer
-  
+
   .Parameter CustomerName
   .Parameter BusinessNumber
   .Parameter Domain

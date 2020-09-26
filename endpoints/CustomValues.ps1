@@ -2,7 +2,7 @@
 <#
   .Synopsis
   Get the value from a custom field in Atera
-  
+
   .Parameter ObjectType
   The type of object to query against. Options: Ticket, Customer, Contact, Contract, SLA, Agent, SNMP, TCP, HTTP, Generic
 
@@ -11,7 +11,7 @@
 
   .Parameter FieldName
   The name of the customer field
-  
+
   .Example
   Get-AteraCustomValue -ObjectType Ticket -ObjectID 1234 -FieldName "Scheduled For"
   # Get the "Scheduled For" field for Ticket 1234

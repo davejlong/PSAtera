@@ -10,7 +10,7 @@ function Get-AteraTickets {
 <#
   .Synopsis
   Get a single ticket by it's ID
-  
+
   .Parameter TicketID
 #>
 function Get-AteraTicket {
@@ -79,7 +79,7 @@ function Get-AteraTicketWorkHoursList {
 <#
   .Synopsis
   Get all comments on a ticket
-  
+
   .Parameter TicketID
 #>
 function Get-AteraTicketComments {
@@ -97,7 +97,7 @@ function Get-AteraTicketComments {
   .Parameter Pending
   .Parameter Resolved
   .Parameter Closed
-  
+
   .Example
   Get-AteraTicketsFiltered -Open -Pending
   # Get all open or pending tickets
@@ -146,7 +146,7 @@ function Get-AteraTicketsFiltered {
   .Parameter TicketType
   Type of ticket being reported. Defaults to Problem. Options: Problem, Bug, Request, Other, Incident, Change
   .Parameter TechnicianContactID
-  
+
   .Example
   Get-AteraContacts | Where-Object Email -eq "john@example.com" | New-AteraTicket -TicketTitle "Computer won't turn on" -Description "Some long description"
   # Create a new ticket for a user who's email is john@example.com
@@ -191,7 +191,7 @@ function New-AteraTicket {
 <#
   .Synopsis
   Updates details about a ticket
-  
+
   .Parameter TicketID
   ID of the ticket to update
   .Parameter TicketTitle
@@ -237,6 +237,6 @@ function Set-AteraTicket {
   if ($TicketImpact -ne "") { $Body.TicketImpact = $TicketImpact }
   if ($TechnicianContactID -ne "") { $Body.TechnicianContactID = $TechnicianContactID }
   if (!$Body.Count) { throw "At least one update parameter needs to be set" }
- 
+
   New-AteraPostRequest -Endpoint "/tickets/$($TicketID)" -Body $Body
 }
