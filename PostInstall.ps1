@@ -1,0 +1,1 @@
+Write-Output "To use PSAtera, you must either set the ATERAAPIKEY environment or call Set-AteraAPIKey"

@@ -12,7 +12,7 @@
 RootModule = 'PSAtera.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.4.2'
+ModuleVersion = '1.4.3'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -136,6 +136,8 @@ PrivateData = @{
     } # End of PSData hashtable
 
  } # End of PrivateData hashtable
+
+ ScriptsToProcess = @('PostInstall.ps1')
 
 # HelpInfo URI of this module
 # HelpInfoURI = ''
