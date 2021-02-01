@@ -1,0 +1,1635 @@
+
+NAME
+    Get-AteraAgent
+    
+SYNOPSIS
+    Gets information about a single agents
+    
+    
+SYNTAX
+    Get-AteraAgent [-AgentID <Int32>] [<CommonParameters>]
+    
+    Get-AteraAgent [-MachineName <String>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    -AgentID <Int32>
+        The ID of the agent to retrieve
+        
+    -MachineName <String>
+        Hostname of the agent to retrieve (defaults to current hostname)
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS > Get-AteraAgent
+    # Get information about the system running the command
+    
+    
+    
+    
+    
+    
+    -------------------------- EXAMPLE 2 --------------------------
+    
+    PS > Get-AteraAgent -MachineName "SOME-DC-01"
+    # Get information about agent named "SOME-DC-01"
+    
+    
+    
+    
+    
+    
+    -------------------------- EXAMPLE 3 --------------------------
+    
+    PS > Get-AteraAgent -AgentID 1234
+    # Get an agent based on it's ID
+    
+    
+    
+    
+    
+    
+REMARKS
+    To see the examples, type: "Get-Help Get-AteraAgent -Examples"
+    For more information, type: "Get-Help Get-AteraAgent -Detailed"
+    For technical information, type: "Get-Help Get-AteraAgent -Full"
+
+
+
+NAME
+    Get-AteraAgents
+    
+SYNOPSIS
+    Get's a list of agents from Atera
+    
+    
+SYNTAX
+    Get-AteraAgents [[-CustomerID] <Int32>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    -CustomerID <Int32>
+        A Customer ID to filter down agents to
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS > Get-AteraAgents | Where-Object { $_.OSType -eq "Domain Controller"}
+    # Get all domain controllers
+    
+    
+    
+    
+    
+    
+    -------------------------- EXAMPLE 2 --------------------------
+    
+    PS > Get-AteraAgents | ForEach-Object { $_.IPAddresses = $_.IPAddresses -join ","; $_} | Export-CSV -Path "Agents.csv"
+    # Get agents into a CSV file fixing IP Addresses into a list
+    
+    
+    
+    
+    
+    
+    -------------------------- EXAMPLE 3 --------------------------
+    
+    PS > Get-AteraCustomers | Where CustomerName -eq "Unassigned" | Get-AteraAgents
+    # Get unassigned agents
+    
+    
+    
+    
+    
+    
+REMARKS
+    To see the examples, type: "Get-Help Get-AteraAgents -Examples"
+    For more information, type: "Get-Help Get-AteraAgents -Detailed"
+    For technical information, type: "Get-Help Get-AteraAgents -Full"
+
+
+
+NAME
+    Get-AteraAlert
+    
+SYNOPSIS
+    Get an alert based on it's ID
+    
+    
+SYNTAX
+    Get-AteraAlert [-AlertID] <Int32> [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    -AlertID <Int32>
+        ID of Alert to retrieve
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+REMARKS
+    To see the examples, type: "Get-Help Get-AteraAlert -Examples"
+    For more information, type: "Get-Help Get-AteraAlert -Detailed"
+    For technical information, type: "Get-Help Get-AteraAlert -Full"
+
+
+
+NAME
+    Get-AteraAlerts
+    
+SYNOPSIS
+    Get all Atera alerts
+    
+    
+SYNTAX
+    Get-AteraAlerts [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+REMARKS
+    To see the examples, type: "Get-Help Get-AteraAlerts -Examples"
+    For more information, type: "Get-Help Get-AteraAlerts -Detailed"
+    For technical information, type: "Get-Help Get-AteraAlerts -Full"
+
+
+
+NAME
+    Get-AteraAlertsFiltered
+    
+SYNOPSIS
+    Filter alerts based on status and severity
+    
+    
+SYNTAX
+    Get-AteraAlertsFiltered [-Open] [-Closed] [-Information] [-Warning] [-Critical] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    -Open [<SwitchParameter>]
+        Turn on to retrieve Open alerts
+        
+    -Closed [<SwitchParameter>]
+        Turn on to retrieve Closed alerts
+        
+    -Information [<SwitchParameter>]
+        Turn on to retrieve alerts with Information severity
+        
+    -Warning [<SwitchParameter>]
+        Turn on to retrieve alerts with Warning severity
+        
+    -Critical [<SwitchParameter>]
+        Turn on to retrieve alerts with Critical severity
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS > Get-AteraAlertsFiltered -Open -Critical
+    # Retrieve all open critical alerts
+    
+    
+    
+    
+    
+    
+    -------------------------- EXAMPLE 2 --------------------------
+    
+    PS > Get-AteraAlertsFiltered -Open -Warning -Critical
+    # Retrieve all open alerts that have either warning or critical severity
+    
+    
+    
+    
+    
+    
+REMARKS
+    To see the examples, type: "Get-Help Get-AteraAlertsFiltered -Examples"
+    For more information, type: "Get-Help Get-AteraAlertsFiltered -Detailed"
+    For technical information, type: "Get-Help Get-AteraAlertsFiltered -Full"
+
+
+
+NAME
+    Get-AteraAPIKey
+    
+SYNOPSIS
+    Get the Atera API Key in use by the module.
+    
+    
+SYNTAX
+    Get-AteraAPIKey [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+REMARKS
+    To see the examples, type: "Get-Help Get-AteraAPIKey -Examples"
+    For more information, type: "Get-Help Get-AteraAPIKey -Detailed"
+    For technical information, type: "Get-Help Get-AteraAPIKey -Full"
+
+
+
+NAME
+    Get-AteraContact
+    
+SYNOPSIS
+    Get a single contact by it's ID
+    
+    
+SYNTAX
+    Get-AteraContact [-ContactID] <Int32> [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    -ContactID <Int32>
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+REMARKS
+    To see the examples, type: "Get-Help Get-AteraContact -Examples"
+    For more information, type: "Get-Help Get-AteraContact -Detailed"
+    For technical information, type: "Get-Help Get-AteraContact -Full"
+
+
+
+NAME
+    Get-AteraContacts
+    
+SYNOPSIS
+    Get list of contacts from API
+    
+    
+SYNTAX
+    Get-AteraContacts [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+REMARKS
+    To see the examples, type: "Get-Help Get-AteraContacts -Examples"
+    For more information, type: "Get-Help Get-AteraContacts -Detailed"
+    For technical information, type: "Get-Help Get-AteraContacts -Full"
+
+
+
+NAME
+    Get-AteraContract
+    
+SYNOPSIS
+    Get a single contract from the API
+    
+    
+SYNTAX
+    Get-AteraContract [[-ContractID] <Int32>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    -ContractID <Int32>
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+REMARKS
+    To see the examples, type: "Get-Help Get-AteraContract -Examples"
+    For more information, type: "Get-Help Get-AteraContract -Detailed"
+    For technical information, type: "Get-Help Get-AteraContract -Full"
+
+
+
+NAME
+    Get-AteraContracts
+    
+SYNOPSIS
+    Get list of contracts from the API
+    
+    
+SYNTAX
+    Get-AteraContracts [[-CustomerID] <Int32>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    -CustomerID <Int32>
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+REMARKS
+    To see the examples, type: "Get-Help Get-AteraContracts -Examples"
+    For more information, type: "Get-Help Get-AteraContracts -Detailed"
+    For technical information, type: "Get-Help Get-AteraContracts -Full"
+
+
+
+NAME
+    Get-AteraCustomer
+    
+SYNOPSIS
+    Get a single customer from the API
+    
+    
+SYNTAX
+    Get-AteraCustomer [-CustomerID] <Int32> [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    -CustomerID <Int32>
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+REMARKS
+    To see the examples, type: "Get-Help Get-AteraCustomer -Examples"
+    For more information, type: "Get-Help Get-AteraCustomer -Detailed"
+    For technical information, type: "Get-Help Get-AteraCustomer -Full"
+
+
+
+NAME
+    Get-AteraCustomers
+    
+SYNOPSIS
+    Get a list of customers from the API
+    
+    
+SYNTAX
+    Get-AteraCustomers [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+REMARKS
+    To see the examples, type: "Get-Help Get-AteraCustomers -Examples"
+    For more information, type: "Get-Help Get-AteraCustomers -Detailed"
+    For technical information, type: "Get-Help Get-AteraCustomers -Full"
+
+
+
+NAME
+    Get-AteraCustomValue
+    
+SYNOPSIS
+    Get the value from a custom field in Atera
+    
+    
+SYNTAX
+    Get-AteraCustomValue [-ObjectType] <String> [-ObjectID] <Int32> [-FieldName] <String> [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    -ObjectType <String>
+        The type of object to query against. Options: Ticket, Customer, Contact, Contract, SLA, Agent, SNMP, TCP, HTTP, Generic
+        
+    -ObjectID <Int32>
+        The ID of the object to query (ex. Ticket ID)
+        
+    -FieldName <String>
+        The name of the customer field
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS > Get-AteraCustomValue -ObjectType Ticket -ObjectID 1234 -FieldName "Scheduled For"
+    # Get the "Scheduled For" field for Ticket 1234
+    
+    
+    
+    
+    
+    
+REMARKS
+    To see the examples, type: "Get-Help Get-AteraCustomValue -Examples"
+    For more information, type: "Get-Help Get-AteraCustomValue -Detailed"
+    For technical information, type: "Get-Help Get-AteraCustomValue -Full"
+
+
+
+NAME
+    Get-AteraExpense
+    
+SYNOPSIS
+    Get a single Expense by it's ID
+    
+    
+SYNTAX
+    Get-AteraExpense [-ExpenseID] <Int32> [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    -ExpenseID <Int32>
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+REMARKS
+    To see the examples, type: "Get-Help Get-AteraExpense -Examples"
+    For more information, type: "Get-Help Get-AteraExpense -Detailed"
+    For technical information, type: "Get-Help Get-AteraExpense -Full"
+
+
+
+NAME
+    Get-AteraExpenses
+    
+SYNOPSIS
+    Get a list of the expenses from the API
+    
+    
+SYNTAX
+    Get-AteraExpenses [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+REMARKS
+    To see the examples, type: "Get-Help Get-AteraExpenses -Examples"
+    For more information, type: "Get-Help Get-AteraExpenses -Detailed"
+    For technical information, type: "Get-Help Get-AteraExpenses -Full"
+
+
+
+NAME
+    Get-AteraInvoice
+    
+SYNOPSIS
+    Get an invoice by the Invoice ID
+    
+    
+SYNTAX
+    Get-AteraInvoice [-InvoiceNumber] <Int32> [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    -InvoiceNumber <Int32>
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+REMARKS
+    To see the examples, type: "Get-Help Get-AteraInvoice -Examples"
+    For more information, type: "Get-Help Get-AteraInvoice -Detailed"
+    For technical information, type: "Get-Help Get-AteraInvoice -Full"
+
+
+
+NAME
+    Get-AteraInvoices
+    
+SYNOPSIS
+    Get invoices from Atera
+    
+    
+SYNTAX
+    Get-AteraInvoices [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+REMARKS
+    To see the examples, type: "Get-Help Get-AteraInvoices -Examples"
+    For more information, type: "Get-Help Get-AteraInvoices -Detailed"
+    For technical information, type: "Get-Help Get-AteraInvoices -Full"
+
+
+
+NAME
+    Get-AteraKnowledgebase
+    
+SYNOPSIS
+    Get all pages from the Knowledgebase
+    
+    
+SYNTAX
+    Get-AteraKnowledgebase [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+REMARKS
+    To see the examples, type: "Get-Help Get-AteraKnowledgebase -Examples"
+    For more information, type: "Get-Help Get-AteraKnowledgebase -Detailed"
+    For technical information, type: "Get-Help Get-AteraKnowledgebase -Full"
+
+
+
+NAME
+    Get-AteraProduct
+    
+SYNOPSIS
+    Get a single product by it's ID
+    
+    
+SYNTAX
+    Get-AteraProduct [-ProductID] <Int32> [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    -ProductID <Int32>
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+REMARKS
+    To see the examples, type: "Get-Help Get-AteraProduct -Examples"
+    For more information, type: "Get-Help Get-AteraProduct -Detailed"
+    For technical information, type: "Get-Help Get-AteraProduct -Full"
+
+
+
+NAME
+    Get-AteraProducts
+    
+SYNOPSIS
+    Get a list of products from the API
+    
+    
+SYNTAX
+    Get-AteraProducts [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+REMARKS
+    To see the examples, type: "Get-Help Get-AteraProducts -Examples"
+    For more information, type: "Get-Help Get-AteraProducts -Detailed"
+    For technical information, type: "Get-Help Get-AteraProducts -Full"
+
+
+
+NAME
+    Get-AteraRecordLimit
+    
+SYNOPSIS
+    Get the maximum number of records returned by API calls.
+    
+    
+SYNTAX
+    Get-AteraRecordLimit [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+REMARKS
+    To see the examples, type: "Get-Help Get-AteraRecordLimit -Examples"
+    For more information, type: "Get-Help Get-AteraRecordLimit -Detailed"
+    For technical information, type: "Get-Help Get-AteraRecordLimit -Full"
+
+
+
+NAME
+    Get-AteraTicket
+    
+SYNOPSIS
+    Get a single ticket by it's ID
+    
+    
+SYNTAX
+    Get-AteraTicket [[-TicketID] <Int32>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    -TicketID <Int32>
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+REMARKS
+    To see the examples, type: "Get-Help Get-AteraTicket -Examples"
+    For more information, type: "Get-Help Get-AteraTicket -Detailed"
+    For technical information, type: "Get-Help Get-AteraTicket -Full"
+
+
+
+NAME
+    Get-AteraTicketBillableDuration
+    
+SYNOPSIS
+    Get the billable time spent on a ticket
+    
+    
+SYNTAX
+    Get-AteraTicketBillableDuration [[-TicketID] <Int32>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    -TicketID <Int32>
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+REMARKS
+    To see the examples, type: "Get-Help Get-AteraTicketBillableDuration -Examples"
+    For more information, type: "Get-Help Get-AteraTicketBillableDuration -Detailed"
+    For technical information, type: "Get-Help Get-AteraTicketBillableDuration -Full"
+
+
+
+NAME
+    Get-AteraTicketComments
+    
+SYNOPSIS
+    Get all comments on a ticket
+    
+    
+SYNTAX
+    Get-AteraTicketComments [[-TicketID] <Int32>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    -TicketID <Int32>
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+REMARKS
+    To see the examples, type: "Get-Help Get-AteraTicketComments -Examples"
+    For more information, type: "Get-Help Get-AteraTicketComments -Detailed"
+    For technical information, type: "Get-Help Get-AteraTicketComments -Full"
+
+
+
+NAME
+    Get-AteraTicketNonBillableDuration
+    
+SYNOPSIS
+    Get the nonbillable time spent on a ticket
+    
+    
+SYNTAX
+    Get-AteraTicketNonBillableDuration [[-TicketID] <Int32>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    -TicketID <Int32>
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+REMARKS
+    To see the examples, type: "Get-Help Get-AteraTicketNonBillableDuration -Examples"
+    For more information, type: "Get-Help Get-AteraTicketNonBillableDuration -Detailed"
+    For technical information, type: "Get-Help Get-AteraTicketNonBillableDuration -Full"
+
+
+
+NAME
+    Get-AteraTickets
+    
+SYNOPSIS
+    Get a list of all tickets in Atera
+    
+    
+SYNTAX
+    Get-AteraTickets [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+REMARKS
+    To see the examples, type: "Get-Help Get-AteraTickets -Examples"
+    For more information, type: "Get-Help Get-AteraTickets -Detailed"
+    For technical information, type: "Get-Help Get-AteraTickets -Full"
+
+
+
+NAME
+    Get-AteraTicketsFiltered
+    
+SYNOPSIS
+    Get a filtered list of tickets from the API
+    
+    
+SYNTAX
+    Get-AteraTicketsFiltered [-Open] [-Pending] [-Resolved] [-Closed] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    -Open [<SwitchParameter>]
+        
+    -Pending [<SwitchParameter>]
+        
+    -Resolved [<SwitchParameter>]
+        
+    -Closed [<SwitchParameter>]
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS > Get-AteraTicketsFiltered -Open -Pending
+    # Get all open or pending tickets
+    
+    
+    
+    
+    
+    
+REMARKS
+    To see the examples, type: "Get-Help Get-AteraTicketsFiltered -Examples"
+    For more information, type: "Get-Help Get-AteraTicketsFiltered -Detailed"
+    For technical information, type: "Get-Help Get-AteraTicketsFiltered -Full"
+
+
+
+NAME
+    Get-AteraTicketWorkHours
+    
+SYNOPSIS
+    Get both the billable and nonbillable time spent on a ticket
+    
+    
+SYNTAX
+    Get-AteraTicketWorkHours [[-TicketID] <Int32>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    -TicketID <Int32>
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+REMARKS
+    To see the examples, type: "Get-Help Get-AteraTicketWorkHours -Examples"
+    For more information, type: "Get-Help Get-AteraTicketWorkHours -Detailed"
+    For technical information, type: "Get-Help Get-AteraTicketWorkHours -Full"
+
+
+
+NAME
+    Get-AteraTicketWorkHoursList
+    
+SYNOPSIS
+    Get a list of time sheets for a ticket
+    
+    
+SYNTAX
+    Get-AteraTicketWorkHoursList [[-TicketID] <Int32>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    -TicketID <Int32>
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+REMARKS
+    To see the examples, type: "Get-Help Get-AteraTicketWorkHoursList -Examples"
+    For more information, type: "Get-Help Get-AteraTicketWorkHoursList -Detailed"
+    For technical information, type: "Get-Help Get-AteraTicketWorkHoursList -Full"
+
+
+
+NAME
+    Install-AteraAgent
+    
+SYNOPSIS
+    Installs the Atera Agent for a device
+    
+    
+SYNTAX
+    Install-AteraAgent [-Subdomain] <String> [-IntegratorLogin] <String> [[-CustomerID] <Int32>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    -Subdomain <String>
+        Atera instances subdomain (ex. for https://example.atera.com/GetAgent... the subdomain is 'example')
+        
+    -IntegratorLogin <String>
+        Your Atera username
+        
+    -CustomerID <Int32>
+        Customer ID to assign agent to. If not provided, assigned agent to the Unassigned customer in Atera
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS > Install-AteraAgent -Subdomain example -IntegratorLogin john@example.com -CustomerID 2
+    # Install agent
+    
+    
+    
+    
+    
+    
+    -------------------------- EXAMPLE 2 --------------------------
+    
+    PS > Get-AteraCustomers | Where CustomerName -eq "Contoso" | Install-AteraAgent -Subdomain example -IntegratorLogin john@example.com
+    # Search for a customer to install the agent for
+    
+    
+    
+    
+    
+    
+REMARKS
+    To see the examples, type: "Get-Help Install-AteraAgent -Examples"
+    For more information, type: "Get-Help Install-AteraAgent -Detailed"
+    For technical information, type: "Get-Help Install-AteraAgent -Full"
+
+
+
+NAME
+    New-AteraAlert
+    
+SYNOPSIS
+    Creates a new Atera alert
+    
+    
+SYNTAX
+    New-AteraAlert [-DeviceGuid] <String> [-CustomerID] <Int32> [-Title] <String> [[-Severity] <String>] [[-AlertCategoryID] <String>] [[-AlertMessage] <String>] [[-TicketID] <Int32>] [[-Code] <Int32>] [[-ThresholdValue1] <String>] [[-ThresholdValue2] <String>] [[-ThresholdValue3] <String>] [[-ThresholdValue4] <String>] [[-ThresholdValue5] <String>] [[-SnoozedEndDate] <DateTime>] [[-AdditionalInfo] <String>] [[-MessageTemplate] <String>] [[-FolderID] <Int32>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    -DeviceGuid <String>
+        ID of the agent to open alert against. Can be retrieved from Atera Agents endpoint
+        
+    -CustomerID <Int32>
+        Customer ID to open alert in.
+        
+    -Title <String>
+        Title to give the alert
+        
+    -Severity <String>
+        Severity of the alert. Defaults to Warning. Options: Information, Warning, Critical
+        
+    -AlertCategoryID <String>
+        Category of alert. Defaults to General. Options: Hardware, Disk, Availability, Performance, Exchange, General
+        
+    -AlertMessage <String>
+        Additional information to show with alert in dashboard
+        
+    -TicketID <Int32>
+        Ticket that alert is assigned to
+        
+    -Code <Int32>
+        ?
+        
+    -ThresholdValue1 <String>
+        Optional field to store alert information. Only available through API
+        
+    -ThresholdValue2 <String>
+        Optional field to store alert information. Only available through API
+        
+    -ThresholdValue3 <String>
+        Optional field to store alert information. Only available through API
+        
+    -ThresholdValue4 <String>
+        Optional field to store alert information. Only available through API
+        
+    -ThresholdValue5 <String>
+        Optional field to store alert information. Only available through API
+        
+    -SnoozedEndDate <DateTime>
+        
+    -AdditionalInfo <String>
+        Optional field to store alert information. Only available through API
+        
+    -MessageTemplate <String>
+        ?
+        
+    -FolderID <Int32>
+        ?
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS > $BatteryReport = Join-Path $env:TEMP "batteryreport.xml"
+    $Proc = Start-Process -FilePath powercfg.exe -ArgumentList "/batteryreport /xml /output $($BatteryReport)" -PassThru -NoNewWindow -Wait
+    
+    if ($Proc.ExitCode -eq 1) {
+      Write-Output "No battery present"
+      exit
+    }
+    
+    $Report = ([xml](Get-Content $BatteryReport)).BatteryReport
+    
+    $MaxCharge = $Report.Batteries.Battery.FullChargeCapacity
+    $DesignCapacity = $Report.Batteries.Battery.DesignCapacity
+    $BatteryHealth = $MaxCharge / $DesignCapacity
+    
+    if ($BatteryHealth -gt 0.5) {
+      Write-Output "Battery is charging to $([math]::Round($BatteryHealth*100, 2))% of designed capacity"
+      exit
+    }
+    # Create the alert saving the charge percentage in Threshold Value 1, the Max Charge in Threshold Value 2 and the Designed capacity in Threshold Value 3
+    Get-AteraAgent | New-AteraAlert -Title "Battery unhealthy" -Severity Warning -AlertCategoryID Hardware -ThresholdValue1 $BatteryHealth -ThresholdValue2 $MaxCharge -ThresholdValue3 $DesignCapacity
+    
+    
+    
+    
+REMARKS
+    To see the examples, type: "Get-Help New-AteraAlert -Examples"
+    For more information, type: "Get-Help New-AteraAlert -Detailed"
+    For technical information, type: "Get-Help New-AteraAlert -Full"
+
+
+
+NAME
+    New-AteraContact
+    
+SYNOPSIS
+    Create a contact attached to a customer
+    
+    
+SYNTAX
+    New-AteraContact -CustomerID <Int32> -Email <String> [-FirstName <String>] [-LastName <String>] [-JobTitle <String>] [-Phone <String>] [-IsContactPerson] [-InIgnoreMode <String>] [<CommonParameters>]
+    
+    New-AteraContact -CustomerName <String> -Email <String> [-FirstName <String>] [-LastName <String>] [-JobTitle <String>] [-Phone <String>] [-IsContactPerson] [-InIgnoreMode <String>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    -CustomerID <Int32>
+        
+    -CustomerName <String>
+        
+    -Email <String>
+        
+    -FirstName <String>
+        
+    -LastName <String>
+        
+    -JobTitle <String>
+        
+    -Phone <String>
+        
+    -IsContactPerson [<SwitchParameter>]
+        Mark this contact as a key contact for the customer
+        
+    -InIgnoreMode <String>
+        Ignore emails from this contact
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS > Get-AzureADUser | ForEach-Object {
+      New-AteraContact -CustomerName "Contoso" -Email $_.Mail -FirstName $_.GivenName -LastName $_.Surname -Phone $_.TelephoneNumber -JobTitle $_.JobTitle
+    }
+    # Imports all Azure AD users into Atera
+    
+    
+    
+    
+    
+    
+REMARKS
+    To see the examples, type: "Get-Help New-AteraContact -Examples"
+    For more information, type: "Get-Help New-AteraContact -Detailed"
+    For technical information, type: "Get-Help New-AteraContact -Full"
+
+
+
+NAME
+    New-AteraCustomer
+    
+SYNOPSIS
+    Creates a new Customer
+    
+    
+SYNTAX
+    New-AteraCustomer [-CustomerName] <String> [[-BusinessNumber] <String>] [[-Domain] <String>] [[-Address] <String>] [[-City] <String>] [[-State] <String>] [[-ZipCodeStr] <String>] [[-Country] <String>] [[-Phone] <String>] [[-Fax] <String>] [[-Notes] <String>] [[-Links] <String>] [[-Longitude] <String>] [[-Latitude] <String>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    -CustomerName <String>
+        
+    -BusinessNumber <String>
+        
+    -Domain <String>
+        Semi-colon delimited list of domains used by customer. Should include both email domains and ActiveDirectory domains
+        
+    -Address <String>
+        
+    -City <String>
+        
+    -State <String>
+        
+    -ZipCodeStr <String>
+        
+    -Country <String>
+        
+    -Phone <String>
+        
+    -Fax <String>
+        
+    -Notes <String>
+        
+    -Links <String>
+        
+    -Longitude <String>
+        Longitude used to generate dot on the dashboard map of customers
+        
+    -Latitude <String>
+        Latitude used to generate dot on the dashboard map of customers
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+REMARKS
+    To see the examples, type: "Get-Help New-AteraCustomer -Examples"
+    For more information, type: "Get-Help New-AteraCustomer -Detailed"
+    For technical information, type: "Get-Help New-AteraCustomer -Full"
+
+
+
+NAME
+    New-AteraExpense
+    
+SYNOPSIS
+    Create a new expense in Atera
+    
+    
+SYNTAX
+    New-AteraExpense [-Description] <String> [[-Category] <String>] [[-Amount] <Double>] [[-SKU] <String>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    -Description <String>
+        Name to give the expense
+        
+    -Category <String>
+        Category to assign expense to
+        
+    -Amount <Double>
+        Price of the expense
+        
+    -SKU <String>
+        Optional SKU number to assign to expense
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+REMARKS
+    To see the examples, type: "Get-Help New-AteraExpense -Examples"
+    For more information, type: "Get-Help New-AteraExpense -Detailed"
+    For technical information, type: "Get-Help New-AteraExpense -Full"
+
+
+
+NAME
+    New-AteraGetRequest
+    
+SYNOPSIS
+    Generic command for making GET requests against the Atera API
+    
+    
+SYNTAX
+    New-AteraGetRequest [-Endpoint] <String> [[-Paginate] <Boolean>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    -Endpoint <String>
+        Endpoint to request, beginning with a /
+        
+    -Paginate <Boolean>
+        Whether to paginate the request. If set to false, will only query the first page of results.
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS > New-AteraGetRequest -Endpoint "/customers/3"
+    # Get a customer
+    
+    
+    
+    
+    
+    
+    -------------------------- EXAMPLE 2 --------------------------
+    
+    PS > New-AteraGetRequest -Endpoint "/customvalues/ticketfield/2/Product%20Family" -Paginate $false
+    # Get a custom value (which needs to not paginate)
+    
+    
+    
+    
+    
+    
+REMARKS
+    To see the examples, type: "Get-Help New-AteraGetRequest -Examples"
+    For more information, type: "Get-Help New-AteraGetRequest -Detailed"
+    For technical information, type: "Get-Help New-AteraGetRequest -Full"
+
+
+
+NAME
+    New-AteraPostRequest
+    
+SYNOPSIS
+    Generic command for making POST requests against the Atera API
+    
+    
+SYNTAX
+    New-AteraPostRequest [-Endpoint] <String> [-Body] <Hashtable> [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    -Endpoint <String>
+        Endpoint to request, beginning with a /
+        
+    -Body <Hashtable>
+        Hashtable of data to send in POST request
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS > New-AteraPostRequest -Endpoint "/contacts" -Body @{CustomerID=5; Email="john@example.com"}
+    # Create a new Contact
+    
+    
+    
+    
+    
+    
+REMARKS
+    To see the examples, type: "Get-Help New-AteraPostRequest -Examples"
+    For more information, type: "Get-Help New-AteraPostRequest -Detailed"
+    For technical information, type: "Get-Help New-AteraPostRequest -Full"
+
+
+
+NAME
+    New-AteraProduct
+    
+SYNOPSIS
+    Create a new product
+    
+    
+SYNTAX
+    New-AteraProduct [-Description] <String> [[-Category] <String>] [[-Amount] <Double>] [[-SKU] <String>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    -Description <String>
+        Name to give the product
+        
+    -Category <String>
+        Category to assign product to (ex. Cables)
+        
+    -Amount <Double>
+        Price of the product
+        
+    -SKU <String>
+        Optional SKU number to assign to product
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+REMARKS
+    To see the examples, type: "Get-Help New-AteraProduct -Examples"
+    For more information, type: "Get-Help New-AteraProduct -Detailed"
+    For technical information, type: "Get-Help New-AteraProduct -Full"
+
+
+
+NAME
+    New-AteraTicket
+    
+SYNOPSIS
+    Create a new ticket
+    
+    
+SYNTAX
+    New-AteraTicket -TicketTitle <String> -Description <String> -EndUserID <Int32> [-TicketPriority <String>] [-TicketImpact <String>] [-TicketStatus <String>] [-TicketType <String>] [-TechnicianContactID <Int32>] [<CommonParameters>]
+    
+    New-AteraTicket -TicketTitle <String> -Description <String> -EndUserFirstName <String> -EndUserLastName <String> -EndUserEmail <String> [-TicketPriority <String>] [-TicketImpact <String>] [-TicketStatus <String>] [-TicketType <String>] [-TechnicianContactID <Int32>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    -TicketTitle <String>
+        
+    -Description <String>
+        
+    -EndUserID <Int32>
+        ID of the contact submitting the ticket
+        
+    -EndUserFirstName <String>
+        If the contact does not exist, one will be created using this value as the first name
+        
+    -EndUserLastName <String>
+        If the contact does not exist, one will be created using this value as the last name
+        
+    -EndUserEmail <String>
+        Create a new or search for a contact by email
+        
+    -TicketPriority <String>
+        Priority level for new ticket. Defaults to Low. Options: Low, Medium, High, Critical
+        
+    -TicketImpact <String>
+        Impact of the issue reported. Defaults to Minor. Options: NoImpact, Minor, Major, Site Down, Server Issue, Crisis
+        
+    -TicketStatus <String>
+        Current status of ticket. Defaults to Open. Options: Open, Pending, Resolved, Closed
+        
+    -TicketType <String>
+        Type of ticket being reported. Defaults to Problem. Options: Problem, Bug, Request, Other, Incident, Change
+        
+    -TechnicianContactID <Int32>
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS > Get-AteraContacts | Where-Object Email -eq "john@example.com" | New-AteraTicket -TicketTitle "Computer won't turn on" -Description "Some long description"
+    # Create a new ticket for a user who's email is john@example.com
+    
+    
+    
+    
+    
+    
+    -------------------------- EXAMPLE 2 --------------------------
+    
+    PS > New-AteraTicket -TicketTitle "Update Sage Server" -Description "Some long description" -TicketType Change -EndUserEmail john@example.com -EndUserFirstName John -EndUserLastName Smith
+    # Create a new ticket for John Smith, creating his contact if it doesn't exist.
+    
+    
+    
+    
+    
+    
+REMARKS
+    To see the examples, type: "Get-Help New-AteraTicket -Examples"
+    For more information, type: "Get-Help New-AteraTicket -Detailed"
+    For technical information, type: "Get-Help New-AteraTicket -Full"
+
+
+
+NAME
+    Set-AteraAPIKey
+    
+SYNOPSIS
+    Set the Atera API Key used by the module. If none set, the ATERAAPIKEY environment variable will be used instead.
+    
+    
+SYNTAX
+    Set-AteraAPIKey [[-APIKey] <String>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    -APIKey <String>
+        Atera API Key which can be found at https://app.atera.com/Admin#/admin/api
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+REMARKS
+    To see the examples, type: "Get-Help Set-AteraAPIKey -Examples"
+    For more information, type: "Get-Help Set-AteraAPIKey -Detailed"
+    For technical information, type: "Get-Help Set-AteraAPIKey -Full"
+
+
+
+NAME
+    Set-AteraRecordLimit
+    
+SYNOPSIS
+    Set the maximum number of records returned by API calls. Default is set at 1,000.
+    
+    
+SYNTAX
+    Set-AteraRecordLimit [-Limit] <Int32> [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    -Limit <Int32>
+        Number of total records returned by Get- command
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+REMARKS
+    To see the examples, type: "Get-Help Set-AteraRecordLimit -Examples"
+    For more information, type: "Get-Help Set-AteraRecordLimit -Detailed"
+    For technical information, type: "Get-Help Set-AteraRecordLimit -Full"
+
+
+
+NAME
+    Set-AteraTicket
+    
+SYNOPSIS
+    Updates details about a ticket
+    
+    
+SYNTAX
+    Set-AteraTicket [-TicketID] <String> [[-TicketTitle] <String>] [[-TicketStatus] <String>] [[-TicketType] <String>] [[-TicketPriority] <String>] [[-TicketImpact] <String>] [[-TechnicianContactID] <Int32>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    -TicketID <String>
+        ID of the ticket to update
+        
+    -TicketTitle <String>
+        New title for ticket
+        
+    -TicketStatus <String>
+        New status for ticket (Options: Open, Pending, Resolved, Closed)
+        
+    -TicketType <String>
+        New type for ticket (Options: Problem, Bug, Question, Request, Other, Incident, Change)
+        
+    -TicketPriority <String>
+        New priority for ticket (Options: Low, Medium, High, Critical)
+        
+    -TicketImpact <String>
+        New impact for ticket (Options: NoImpact, SiteDown, ServiceIssue, Minor, Major, Crisis)
+        
+    -TechnicianContactID <Int32>
+        New technician ID to assign ticket to
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+REMARKS
+    To see the examples, type: "Get-Help Set-AteraTicket -Examples"
+    For more information, type: "Get-Help Set-AteraTicket -Detailed"
+    For technical information, type: "Get-Help Set-AteraTicket -Full"
+
+
