@@ -76,6 +76,40 @@ function New-AteraPostRequest {
   return $data
 }
 
+<#
+  .Synopsis
+  Generic command for making PUT requests against the Atera API. Basically the same as the
+  New-AteraPostRequest command.
+
+  .Parameter Endpoint
+  Endpoint to request, beginning with a /
+
+  .Parameter Body
+  Hashtable of data to send in PUT request
+
+  .Example
+  New-AteraPutRequest -Endpoint "/customvalues/customerfield/1/age/5%20Years"
+  # Updates the age field on customer 1 to "5 Years"
+#>
+function New-AteraPutRequest {
+  [CmdletBinding()]
+  param (
+    [Parameter(Mandatory)]
+    [string] $Endpoint,
+    [Parameter(ValueFromPipeline)]
+    [Hashtable] $Body
+  )
+  $Headers = @{
+    "accept" = "application/json"
+    "X-API-KEY" = Get-AteraAPIKey
+  }
+  $Uri = "https://app.atera.com/api/v3$($endpoint)"
+  Write-Debug "[PSAtera] Request for $Uri"
+  $data = Invoke-RestMethod -Uri $Uri -Method "Put" -Headers $Headers -Body $body
+  return $data
+}
+
+
 $AteraAPIKey = $env:ATERAAPIKEY
 <#
   .Synopsis
