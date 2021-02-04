@@ -4,7 +4,19 @@
   Get a list of all tickets in Atera
 #>
 function Get-AteraTickets {
-  return New-AteraGetRequest -Endpoint "/tickets"
+  param(
+    # Queries tickets by a specific status
+    [Parameter()]
+    [ValidateSet("Open", "Pending", "Resolved", "Closed")]
+    [string] $TicketStatus,
+    # Queries tickets for a specific customer
+    [Parameter()]
+    [int] $CustomerID
+  )
+  $Query = @{}
+  if ($PSBoundParameters.ContainsKey("TicketStatus")) { $Query.Add("ticketStatus", $TicketStatus) }
+  if ($PSBoundParameters.ContainsKey("CustomerID")) { $Query.Add("customerId", $CustomerID) }
+  return New-AteraGetRequest -Endpoint "/tickets" -Query $Query
 }
 
 <#

@@ -1,3 +1,5 @@
+Add-Type -AssemblyName System.Web
+
 <#
   .Synopsis
   Generic command for making GET requests against the Atera API
@@ -22,14 +24,17 @@ function New-AteraGetRequest {
     [Parameter(Mandatory)]
     [string] $Endpoint,
     [Parameter()]
-    [bool] $Paginate=$true
+    [bool] $Paginate=$true,
+    [Parameter()]
+    [Hashtable] $Query
   )
   $Headers = @{
     "accept" = "application/json"
     "X-API-KEY" = Get-AteraAPIKey
   }
   $ItemsInPage = 50
-  $Uri = "https://app.atera.com/api/v3$($endpoint)?itemsInPage=$ItemsInPage"
+  $QueryString = Format-QueryString -Query $Query
+  $Uri = "https://app.atera.com/api/v3$($endpoint)?itemsInPage=$ItemsInPage&$QueryString"
   $items = @()
   $index = 0
 
@@ -202,6 +207,14 @@ function Install-AteraAgent {
   Write-Debug "Exit code: $($proc.ExitCode)"
   if ($proc.ExitCode -eq 0) { Write-Output "Atera Agent installed" -ForegroundColor Green }
   else { Write-Error "Installation failed with exit code $($proc.ExitCode)" -Category InvalidResult }
+}
+
+function Format-QueryString($Query) {
+  $qs = [System.Web.HttpUtility]::ParseQueryString([String]::Empty)
+  foreach($item in $Query.Keys) {
+    $qs.Add($item, $Query[$item])
+  }
+  $qs.ToString()
 }
 
 Get-ChildItem -Path $PSScriptRoot/endpoints | ForEach-Object { . $_.PSPath }
