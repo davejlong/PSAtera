@@ -474,7 +474,7 @@ PARAMETERS
         The ID of the object to query (ex. Ticket ID)
         
     -FieldName <String>
-        The name of the customer field
+        The name of the custom field
         
     <CommonParameters>
         This cmdlet supports the common parameters: Verbose, Debug,
@@ -857,13 +857,27 @@ SYNOPSIS
     
     
 SYNTAX
-    Get-AteraTickets [<CommonParameters>]
+    Get-AteraTickets [-Open] [-Pending] [-Resolved] [-Closed] [[-CustomerID] <Int32>] [<CommonParameters>]
     
     
 DESCRIPTION
     
 
 PARAMETERS
+    -Open [<SwitchParameter>]
+        Queries tickets with the open status
+        
+    -Pending [<SwitchParameter>]
+        Queries tickets with the pending status
+        
+    -Resolved [<SwitchParameter>]
+        Queries tickets with the resolved status
+        
+    -Closed [<SwitchParameter>]
+        Queries tickets with the closed status
+        
+    -CustomerID <Int32>
+        
     <CommonParameters>
         This cmdlet supports the common parameters: Verbose, Debug,
         ErrorAction, ErrorVariable, WarningAction, WarningVariable,
@@ -881,7 +895,7 @@ NAME
     Get-AteraTicketsFiltered
     
 SYNOPSIS
-    Get a filtered list of tickets from the API
+    [Deprecated] Use `Get-AteraTickets` with filter parameters
     
     
 SYNTAX
@@ -1313,7 +1327,7 @@ SYNOPSIS
     
     
 SYNTAX
-    New-AteraGetRequest [-Endpoint] <String> [[-Paginate] <Boolean>] [<CommonParameters>]
+    New-AteraGetRequest [-Endpoint] <String> [[-Paginate] <Boolean>] [[-Query] <Hashtable>] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -1325,6 +1339,8 @@ PARAMETERS
         
     -Paginate <Boolean>
         Whether to paginate the request. If set to false, will only query the first page of results.
+        
+    -Query <Hashtable>
         
     <CommonParameters>
         This cmdlet supports the common parameters: Verbose, Debug,
@@ -1444,6 +1460,51 @@ REMARKS
 
 
 NAME
+    New-AteraPutRequest
+    
+SYNOPSIS
+    Generic command for making PUT requests against the Atera API. Basically the same as the
+    New-AteraPostRequest command.
+    
+    
+SYNTAX
+    New-AteraPutRequest [-Endpoint] <String> [[-Body] <Hashtable>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    -Endpoint <String>
+        Endpoint to request, beginning with a /
+        
+    -Body <Hashtable>
+        Hashtable of data to send in PUT request
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS > New-AteraPutRequest -Endpoint "/customvalues/customerfield/1/age/5%20Years"
+    # Updates the age field on customer 1 to "5 Years"
+    
+    
+    
+    
+    
+    
+REMARKS
+    To see the examples, type: "Get-Help New-AteraPutRequest -Examples"
+    For more information, type: "Get-Help New-AteraPutRequest -Detailed"
+    For technical information, type: "Get-Help New-AteraPutRequest -Full"
+
+
+
+NAME
     New-AteraTicket
     
 SYNOPSIS
@@ -1551,6 +1612,56 @@ REMARKS
     To see the examples, type: "Get-Help Set-AteraAPIKey -Examples"
     For more information, type: "Get-Help Set-AteraAPIKey -Detailed"
     For technical information, type: "Get-Help Set-AteraAPIKey -Full"
+
+
+
+NAME
+    Set-AteraCustomValue
+    
+SYNOPSIS
+    Get the value from a custom field in Atera
+    
+    
+SYNTAX
+    Set-AteraCustomValue [-ObjectType] <String> [-ObjectID] <Int32> [-FieldName] <String> [-Value] <String> [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    -ObjectType <String>
+        The type of object to query against. Options: Ticket, Customer, Contact, Contract, SLA, Agent, SNMP, TCP, HTTP, Generic
+        
+    -ObjectID <Int32>
+        The ID of the object to query (ex. Ticket ID)
+        
+    -FieldName <String>
+        The name of the custom field
+        
+    -Value <String>
+        The value of the custom field
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS > Set-AteraCustomValue -ObjectType Ticket -ObjectID 1234 -FieldName "Scheduled For" -Value "2021-02-03"
+    # Get the "Scheduled For" field for Ticket 1234
+    
+    
+    
+    
+    
+    
+REMARKS
+    To see the examples, type: "Get-Help Set-AteraCustomValue -Examples"
+    For more information, type: "Get-Help Set-AteraCustomValue -Detailed"
+    For technical information, type: "Get-Help Set-AteraCustomValue -Full"
 
 
 
