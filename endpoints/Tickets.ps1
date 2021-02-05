@@ -2,21 +2,35 @@
 <#
   .Synopsis
   Get a list of all tickets in Atera
+  
+  .Parameter Open
+  Queries tickets with the open status
+  .Parameter Pending
+  Queries tickets with the pending status
+  .Parameter Resolved
+  Queries tickets with the resolved status
+  .Parameter Closed
+  Queries tickets with the closed status
+  .Parameter CustomerID
 #>
 function Get-AteraTickets {
   param(
-    # Queries tickets by a specific status
-    [Parameter()]
-    [ValidateSet("Open", "Pending", "Resolved", "Closed")]
-    [string] $TicketStatus,
-    # Queries tickets for a specific customer
-    [Parameter()]
+    [switch] $Open,
+    [switch] $Pending,
+    [switch] $Resolved,
+    [switch] $Closed,
     [int] $CustomerID
   )
+  $Tickets = @()
   $Query = @{}
-  if ($PSBoundParameters.ContainsKey("TicketStatus")) { $Query.Add("ticketStatus", $TicketStatus) }
   if ($PSBoundParameters.ContainsKey("CustomerID")) { $Query.Add("customerId", $CustomerID) }
-  return New-AteraGetRequest -Endpoint "/tickets" -Query $Query
+  @("Open", "Pending", "Resolved", "Closed") | ForEach-Object {
+    $Par = $PSBoundParameters[$_]
+    if ($Par.IsPresent) {
+      $Tickets += New-AteraGetRequest -Endpoint "/tickets" -Query ($Query + @{"ticketStatus" = $_})
+    }
+  }
+  $Tickets
 }
 
 <#
@@ -104,7 +118,7 @@ function Get-AteraTicketComments {
 
 <#
   .Synopsis
-  Get a filtered list of tickets from the API
+  [Deprecated] Use `Get-AteraTickets` with filter parameters
   .Parameter Open
   .Parameter Pending
   .Parameter Resolved
@@ -126,14 +140,7 @@ function Get-AteraTicketsFiltered {
     [switch] $Closed
   )
 
-  return Get-AteraTickets | Where-Object {
-    $included = $false
-    if ($Open.IsPresent -and $_.TicketStatus -eq "Open") { $included = $true }
-    if ($Pending.IsPresent -and $_.TicketStatus -eq "Pending") { $included = $true }
-    if ($Resolved.IsPresent -and $_.TicketStatus -eq "Resolved") { $included = $true }
-    if ($Closed.IsPresent -and $_.TicketStatus -eq "Closed") { $included = $true }
-    return $included
-  }
+  Get-AteraTickets @PSBoundParameters
 }
 
 <#
