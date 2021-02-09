@@ -1,7 +1,7 @@
 
 <#
   .Synopsis
-  Get a list of all tickets in Atera
+  Get a list of all tickets in Atera. Defaults to open and pending tickets when no options provided.
   
   .Parameter Open
   Queries tickets with the open status
