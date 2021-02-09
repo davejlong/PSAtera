@@ -1,9 +1,35 @@
 <#
   .Synopsis
   Get all Atera alerts
+
+  .Parameter Open
+  Queries alerts with the open status
+  .Parameter Resolved
+  Queries alerts with the resolved status
+  .Parameter Snoozed
+  Queries alerts with the snoozed status
+  .Parameter Critical
+  Queries alerts with critical priority (note: parameter not supported in API and may effect command performance)
+  .Parameter Warning
+  Queries alerts with warning priority (note: parameter not supported in API and may effect command performance)
+  .Parameter Information
+  Queries alerts with information priority (note: parameter not supported in API and may effect command performance)
 #>
 function Get-AteraAlerts {
-  return New-AteraGetRequest -Endpoint "/alerts"
+  $Alerts = @()
+  $Query = @{}
+  @("Open", "Resolved", "Snoozed") | ForEach-Object {
+    $Par = $PSBoundParameters[$_]
+    if ($Par.IsPresent) {
+      $Alerts += New-AteraGetRequest "/alerts" -Query ($Query + @{"alertStatus" = $_})
+    }
+  }
+  if ($Critical.IsPresent -or $Warning.IsPresent -or $Information.IsPresent) {
+    return $Alerts | Where-Object {
+      return $PSBoundParameters[$_.Severity].IsPresent
+    }
+  }
+  $Alerts
 }
 
 <#
