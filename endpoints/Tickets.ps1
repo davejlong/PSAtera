@@ -1,7 +1,7 @@
 
 <#
   .Synopsis
-  Get a list of all tickets in Atera
+  Get a list of all tickets in Atera. Defaults to open and pending tickets when no options provided.
   
   .Parameter Open
   Queries tickets with the open status
@@ -21,12 +21,17 @@ function Get-AteraTickets {
     [switch] $Closed,
     [int] $CustomerID
   )
+  if (!($Open -and $Pending -and $Resolved -and $Closed)) {
+    $PSBoundParameters["Open"] = $true
+    $PSBoundParameters["Pending"] = $true
+    
+  }
   $Tickets = @()
   $Query = @{}
   if ($PSBoundParameters.ContainsKey("CustomerID")) { $Query.Add("customerId", $CustomerID) }
   @("Open", "Pending", "Resolved", "Closed") | ForEach-Object {
     $Par = $PSBoundParameters[$_]
-    if ($Par.IsPresent) {
+    if ($Par) {
       $Tickets += New-AteraGetRequest -Endpoint "/tickets" -Query ($Query + @{"ticketStatus" = $_})
     }
   }
