@@ -62,8 +62,8 @@ function Set-AteraCustomValue {
     [int] $ObjectID,
     [Parameter(Mandatory)]
     [string] $FieldName,
-    [Parameter(Mandatory)]
-    [string] $Value
+    [Parameter()]
+    [string] $Value=""
   )
   $FieldName = [uri]::EscapeDataString($FieldName)
   $uri = "/customvalues/$($ObjectType.ToLower())field/$ObjectID/$FieldName"
