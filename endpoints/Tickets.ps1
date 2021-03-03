@@ -15,23 +15,25 @@
 #>
 function Get-AteraTickets {
   param(
+    [Parameter(ParameterSetName="Filtered")]
     [switch] $Open,
+    [Parameter(ParameterSetName="Filtered")]
     [switch] $Pending,
+    [Parameter(ParameterSetName="Filtered")]
     [switch] $Resolved,
+    [Parameter(ParameterSetName="Filtered")]
     [switch] $Closed,
     [int] $CustomerID
   )
-  if (!($Open -and $Pending -and $Resolved -and $Closed)) {
+  if ($PSCmdlet.ParameterSetName -ne "Filtered") {
     $PSBoundParameters["Open"] = $true
     $PSBoundParameters["Pending"] = $true
-    
   }
   $Tickets = @()
   $Query = @{}
   if ($PSBoundParameters.ContainsKey("CustomerID")) { $Query.Add("customerId", $CustomerID) }
   @("Open", "Pending", "Resolved", "Closed") | ForEach-Object {
-    $Par = $PSBoundParameters[$_]
-    if ($Par) {
+    if ($PSBoundParameters[$_]) {
       $Tickets += New-AteraGetRequest -Endpoint "/tickets" -Query ($Query + @{"ticketStatus" = $_})
     }
   }
@@ -123,15 +125,7 @@ function Get-AteraTicketComments {
 
 <#
   .Synopsis
-  [Deprecated] Use `Get-AteraTickets` with filter parameters
-  .Parameter Open
-  .Parameter Pending
-  .Parameter Resolved
-  .Parameter Closed
-
-  .Example
-  Get-AteraTicketsFiltered -Open -Pending
-  # Get all open or pending tickets
+  [Deprecated] Use `Get-AteraTickets` instead
 #>
 function Get-AteraTicketsFiltered {
   param(

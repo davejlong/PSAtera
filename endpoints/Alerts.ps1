@@ -1,6 +1,6 @@
 <#
   .Synopsis
-  Get all Atera alerts
+  Get all Atera alerts. Defaults to open alerts when no options provided.
 
   .Parameter Open
   Queries alerts with the open status
@@ -16,17 +16,26 @@
   Queries alerts with information priority (note: parameter not supported in API and may effect command performance)
 #>
 function Get-AteraAlerts {
+  param(
+    [switch] $Open=!($PSBoundParameters.Keys | Where-Object { @("Resolved", "Snoozed") -match $_ }),
+    [switch] $Resolved,
+    [switch] $Snoozed,
+    [switch] $Critical,
+    [switch] $Warning,
+    [switch] $Information
+  )
   $Alerts = @()
   $Query = @{}
+
   @("Open", "Resolved", "Snoozed") | ForEach-Object {
-    $Par = $PSBoundParameters[$_]
-    if ($Par.IsPresent) {
+    if (Get-Variable $_ -ValueOnly) {
       $Alerts += New-AteraGetRequest "/alerts" -Query ($Query + @{"alertStatus" = $_})
     }
   }
-  if ($Critical.IsPresent -or $Warning.IsPresent -or $Information.IsPresent) {
+
+  if ($Critical -or $Warning -or $Information) {
     return $Alerts | Where-Object {
-      return $PSBoundParameters[$_.Severity].IsPresent
+      return $PSBoundParameters[$_.Severity]
     }
   }
   $Alerts
@@ -47,30 +56,7 @@ function Get-AteraAlert {
 
 <#
   .Synopsis
-  Filter alerts based on status and severity
-
-  .Parameter Open
-  Turn on to retrieve Open alerts
-
-  .Parameter Closed
-  Turn on to retrieve Closed alerts
-
-  .Parameter Information
-  Turn on to retrieve alerts with Information severity
-
-  .Parameter Warning
-  Turn on to retrieve alerts with Warning severity
-
-  .Parameter Critical
-  Turn on to retrieve alerts with Critical severity
-
-  .Example
-  Get-AteraAlertsFiltered -Open -Critical
-  # Retrieve all open critical alerts
-
-  .Example
-  Get-AteraAlertsFiltered -Open -Warning -Critical
-  # Retrieve all open alerts that have either warning or critical severity
+  [Deprecated] Use `Get-AteraAlerts` instead
 #>
 function Get-AteraAlertsFiltered {
   param(
@@ -85,16 +71,7 @@ function Get-AteraAlertsFiltered {
     # Get Critical alerts
     [switch] $Critical
   )
-
-  return Get-AteraAlerts | Where-Object {
-    if ($Open.IsPresent -and $_.Archived) { return $false}
-    if ($Closed.IsPresent -and !$_.Archived) { return $false }
-
-    if ($Information.IsPresent -and $_.Severity -ne "Information") { return $false }
-    if ($Warning.IsPresent -and $_.Severity -ne "Warning") { return $false }
-    if ($Critical.IsPresent -and $_.Severity -ne "Critical") { return $false }
-    return $true
-  }
+  Get-AteraAlerts @PSBoundParameters
 }
 
 <#
