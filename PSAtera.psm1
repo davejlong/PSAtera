@@ -102,15 +102,17 @@ function New-AteraPutRequest {
     [Parameter(Mandatory)]
     [string] $Endpoint,
     [Parameter(ValueFromPipeline)]
-    [Hashtable] $Body
+    [Object] $Body
   )
   $Headers = @{
     "accept" = "application/json"
+    "content-type" = "application/json"
     "X-API-KEY" = Get-AteraAPIKey
   }
   $Uri = "https://app.atera.com/api/v3$($endpoint)"
   Write-Debug "[PSAtera] Request for $Uri"
-  $data = Invoke-RestMethod -Uri $Uri -Method "Put" -Headers $Headers -Body $body
+  $Body | Write-Output
+  $data = Invoke-RestMethod -Uri $Uri -Method "Put" -Headers $Headers -Body (ConvertTo-Json $Body)
   return $data
 }
 
