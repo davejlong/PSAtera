@@ -15,9 +15,9 @@ The PSAtera module relies on the `ATERAAPIKEY` environment variable for the API 
 PS> Install-Module -Name PSAtera
 ```
 
-## Development Plans
+### Alternative Setup
+The below script will make sure all the prerequisites are setup and install PSAtera. Copy and paste the line into a PowerShell window. Run as admin to install PSAtera globally on the system.
 
-* [x] Support all GET API requests for all endpoints
-* [x] Add filtering arguments to requests to filter down items (i.e. only open tickets, critical alerts, server type agents)
-* [x] Support POST requests on all endpoints
-* [ ] Support PUT requests on all endpoints
+```
+[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityPotocol -bor 3072; Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force; Install-Module PSAtera -Force
+```
