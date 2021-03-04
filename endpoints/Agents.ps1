@@ -57,10 +57,10 @@ function Get-AteraAgent {
   ##############
   param(
     # ID of agent to retrieve
-    [Parameter(Mandatory=$false,ParameterSetName="AgentID")]
+    [Parameter(Mandatory=$false)]
     [int]$AgentID,
     # Machine Name; Default hostname of PC
-    [Parameter(Mandatory=$false,ParameterSetName="MachineName")]
+    [Parameter(Mandatory=$false)]
     [string]$MachineName=$env:COMPUTERNAME
   )
   if($AgentID){
