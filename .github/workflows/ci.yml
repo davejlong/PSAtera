@@ -4,12 +4,29 @@ on:
     branches: [ pester ]
 jobs:
   test-pwsh:
+    strategy:
+      matrix:
+        platform: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.platform }}
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run Pester tests (pwsh)
+      run: |
+        Write-host $PSVersionTable.PSVersion.Major $PSVersionTable.PSRemotingProtocolVersion.Minor
+        Set-PSRepository psgallery -InstallationPolicy trusted
+        Install-Module -Name Pester -RequiredVersion 5.1.1 -confirm:$false -Force
+        Invoke-Pester -Path "tests"
+      shell: pwsh
+  
+  test-posh:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Run Pester tests
+    - name: Run Pester tests (PowerShell)
       run: |
+        Write-host $PSVersionTable.PSVersion.Major $PSVersionTable.PSRemotingProtocolVersion.Minor
         Set-PSRepository psgallery -InstallationPolicy trusted
         Install-Module -Name Pester -RequiredVersion 5.1.1 -Confirm:$false -Force
-        Invoke-Pester -Path "Tests/**/*.Test.ps1"
-      shell: pwsh
+        Invoke-Pester -Path "tests"
+        if ($Error[0].Fullyqualifiederrorid -eq 'PesterAssertionFailed') {exit 1}
+      shell: powershell
