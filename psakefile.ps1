@@ -1,4 +1,4 @@
-Task default -depends FunctionsToExport
+Task default -depends RunTests
 
 Task FunctionsToExport {
   $moduleName = Get-Item . | ForEach-Object BaseName
@@ -16,8 +16,8 @@ Task FunctionsToExport {
   Import-Module $moduleName -Force -Verbose:$false
 }
 
-Task Publish -depends FunctionsToExport {
-  $moduleName = Get-Item . | ForEach-Object BaseName
+Task Publish -depends RunTests,ExtractDocs,FunctionsToExport {
+  $moduleName = Get-Item . | ForEach-Object BaeeName
   Publish-Module -Name ".\$($moduleName).psm1" -NuGetApiKey $env:NuGetAPIKey
 }
 
@@ -29,4 +29,8 @@ Task ExtractDocs {
   Get-Command -Module $moduleName | ForEach-Object {
     Get-Help $_.Name -Detailed | Out-File -FilePath "./docs.txt" -Append
   }
+}
+
+Task RunTests {
+  Invoke-Pester -Path "Tests/*.Test.ps1" -Output Detailed
 }
