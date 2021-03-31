@@ -16,7 +16,7 @@ Task FunctionsToExport {
   Import-Module $moduleName -Force -Verbose:$false
 }
 
-Task Publish -depends FunctionsToExport {
+Task Publish -depends FunctionsToExport, ExtractDocs {
   $moduleName = Get-Item . | ForEach-Object BaseName
   Publish-Module -Name ".\$($moduleName).psm1" -NuGetApiKey $env:NuGetAPIKey
 }
