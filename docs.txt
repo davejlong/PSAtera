@@ -7,9 +7,7 @@ SYNOPSIS
     
     
 SYNTAX
-    Get-AteraAgent [-AgentID <Int32>] [<CommonParameters>]
-    
-    Get-AteraAgent [-MachineName <String>] [<CommonParameters>]
+    Get-AteraAgent [[-AgentID] <Int32>] [[-MachineName] <String>] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -161,17 +159,35 @@ NAME
     Get-AteraAlerts
     
 SYNOPSIS
-    Get all Atera alerts
+    Get all Atera alerts. Defaults to open alerts when no options provided.
     
     
 SYNTAX
-    Get-AteraAlerts [<CommonParameters>]
+    Get-AteraAlerts [-Open] [-Resolved] [-Snoozed] [-Critical] [-Warning] [-Information] [<CommonParameters>]
     
     
 DESCRIPTION
     
 
 PARAMETERS
+    -Open [<SwitchParameter>]
+        Queries alerts with the open status
+        
+    -Resolved [<SwitchParameter>]
+        Queries alerts with the resolved status
+        
+    -Snoozed [<SwitchParameter>]
+        Queries alerts with the snoozed status
+        
+    -Critical [<SwitchParameter>]
+        Queries alerts with critical priority (note: parameter not supported in API and may effect command performance)
+        
+    -Warning [<SwitchParameter>]
+        Queries alerts with warning priority (note: parameter not supported in API and may effect command performance)
+        
+    -Information [<SwitchParameter>]
+        Queries alerts with information priority (note: parameter not supported in API and may effect command performance)
+        
     <CommonParameters>
         This cmdlet supports the common parameters: Verbose, Debug,
         ErrorAction, ErrorVariable, WarningAction, WarningVariable,
@@ -189,7 +205,7 @@ NAME
     Get-AteraAlertsFiltered
     
 SYNOPSIS
-    Filter alerts based on status and severity
+    [Deprecated] Use `Get-AteraAlerts` instead
     
     
 SYNTAX
@@ -201,45 +217,25 @@ DESCRIPTION
 
 PARAMETERS
     -Open [<SwitchParameter>]
-        Turn on to retrieve Open alerts
+        Get Open alerts
         
     -Closed [<SwitchParameter>]
-        Turn on to retrieve Closed alerts
+        Get Closed alerts
         
     -Information [<SwitchParameter>]
-        Turn on to retrieve alerts with Information severity
+        Get Information alerts
         
     -Warning [<SwitchParameter>]
-        Turn on to retrieve alerts with Warning severity
+        Get Warning alerts
         
     -Critical [<SwitchParameter>]
-        Turn on to retrieve alerts with Critical severity
+        Get Critical alerts
         
     <CommonParameters>
         This cmdlet supports the common parameters: Verbose, Debug,
         ErrorAction, ErrorVariable, WarningAction, WarningVariable,
         OutBuffer, PipelineVariable, and OutVariable. For more information, see
         about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
-    
-    -------------------------- EXAMPLE 1 --------------------------
-    
-    PS > Get-AteraAlertsFiltered -Open -Critical
-    # Retrieve all open critical alerts
-    
-    
-    
-    
-    
-    
-    -------------------------- EXAMPLE 2 --------------------------
-    
-    PS > Get-AteraAlertsFiltered -Open -Warning -Critical
-    # Retrieve all open alerts that have either warning or critical severity
-    
-    
-    
-    
-    
     
 REMARKS
     To see the examples, type: "Get-Help Get-AteraAlertsFiltered -Examples"
@@ -857,7 +853,7 @@ SYNOPSIS
     
     
 SYNTAX
-    Get-AteraTickets [-Open] [-Pending] [-Resolved] [-Closed] [[-CustomerID] <Int32>] [<CommonParameters>]
+    Get-AteraTickets [-Open] [-Pending] [-Resolved] [-Closed] [-CustomerID <Int32>] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -895,7 +891,7 @@ NAME
     Get-AteraTicketsFiltered
     
 SYNOPSIS
-    [Deprecated] Use `Get-AteraTickets` with filter parameters
+    [Deprecated] Use `Get-AteraTickets` instead
     
     
 SYNTAX
@@ -907,28 +903,22 @@ DESCRIPTION
 
 PARAMETERS
     -Open [<SwitchParameter>]
+        Get Open tickets
         
     -Pending [<SwitchParameter>]
+        Get Pending tickets
         
     -Resolved [<SwitchParameter>]
+        Get Resolved tickets
         
     -Closed [<SwitchParameter>]
+        Get Closed tickets
         
     <CommonParameters>
         This cmdlet supports the common parameters: Verbose, Debug,
         ErrorAction, ErrorVariable, WarningAction, WarningVariable,
         OutBuffer, PipelineVariable, and OutVariable. For more information, see
         about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
-    
-    -------------------------- EXAMPLE 1 --------------------------
-    
-    PS > Get-AteraTicketsFiltered -Open -Pending
-    # Get all open or pending tickets
-    
-    
-    
-    
-    
     
 REMARKS
     To see the examples, type: "Get-Help Get-AteraTicketsFiltered -Examples"
@@ -1468,7 +1458,7 @@ SYNOPSIS
     
     
 SYNTAX
-    New-AteraPutRequest [-Endpoint] <String> [[-Body] <Hashtable>] [<CommonParameters>]
+    New-AteraPutRequest [-Endpoint] <String> [[-Body] <Object>] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -1478,7 +1468,7 @@ PARAMETERS
     -Endpoint <String>
         Endpoint to request, beginning with a /
         
-    -Body <Hashtable>
+    -Body <Object>
         Hashtable of data to send in PUT request
         
     <CommonParameters>
@@ -1623,7 +1613,7 @@ SYNOPSIS
     
     
 SYNTAX
-    Set-AteraCustomValue [-ObjectType] <String> [-ObjectID] <Int32> [-FieldName] <String> [-Value] <String> [<CommonParameters>]
+    Set-AteraCustomValue [-ObjectType] <String> [-ObjectID] <Int32> [-FieldName] <String> [[-Value] <String>] [<CommonParameters>]
     
     
 DESCRIPTION
