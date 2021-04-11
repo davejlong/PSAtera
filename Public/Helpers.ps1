@@ -16,7 +16,7 @@
   New-AteraGetRequest -Endpoint "/customvalues/ticketfield/2/Product%20Family" -Paginate $false
   # Get a custom value (which needs to not paginate)
 #>
-function New-AteraGetRequest {
+function Invoke-AteraGetRequest {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory)]
@@ -46,6 +46,18 @@ function New-AteraGetRequest {
   } while ($Uri -ne "" -and $index -lt [math]::ceiling($RecordLimit / $ItemsInPage))
   return $items
 }
+function New-AteraGetRequest {
+  param (
+    [Parameter(Mandatory)]
+    [string] $Endpoint,
+    [Parameter()]
+    [bool] $Paginate=$true,
+    [Parameter()]
+    [Hashtable] $Query
+  )
+  Write-Warning "New-AteraGetRequest deprecated. Please use Invoke-AteraGetRequest"
+  Invoke-AteraGetRequest @PSBoundParameters
+}
 
 <#
   .Synopsis
@@ -61,7 +73,7 @@ function New-AteraGetRequest {
   New-AteraPostRequest -Endpoint "/contacts" -Body @{CustomerID=5; Email="john@example.com"}
   # Create a new Contact
 #>
-function New-AteraPostRequest {
+function Invoke-AteraPostRequest {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory)]
@@ -77,6 +89,16 @@ function New-AteraPostRequest {
   Write-Debug "[PSAtera] Request for $Uri"
   $data = Invoke-RestMethod -Uri $Uri -Method "POST" -Headers $Headers -Body $Body
   return $data
+}
+function New-AteraPostRequest {
+  param (
+    [Parameter(Mandatory)]
+    [string] $Endpoint,
+    [Parameter(Mandatory, ValueFromPipeline)]
+    [Hashtable] $Body
+  )
+  Write-Warning "New-AteraPostRequest deprecated. Please use Invoke-AteraPostRequest"
+  Invoke-AteraPostRequest @PSBoundParameters
 }
 
 <#
@@ -94,7 +116,7 @@ function New-AteraPostRequest {
   New-AteraPutRequest -Endpoint "/customvalues/customerfield/1/age/5%20Years"
   # Updates the age field on customer 1 to "5 Years"
 #>
-function New-AteraPutRequest {
+function Invoke-AteraPutRequest {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory)]
@@ -112,6 +134,16 @@ function New-AteraPutRequest {
   $JsonBody = ConvertTo-Json -InputObject $Body
   $data = Invoke-RestMethod -Uri $Uri -Method "Put" -Headers $Headers -Body ([System.Text.Encoding]::UTF8.GetBytes($JsonBody))
   return $data
+}
+function New-AteraPutRequest {
+  param (
+    [Parameter(Mandatory)]
+    [string] $Endpoint,
+    [Parameter(Mandatory, ValueFromPipeline)]
+    [Hashtable] $Body
+  )
+  Write-Warning "New-AteraPutRequest deprecated. Please use Invoke-AteraPutRequest"
+  Invoke-AteraPutRequest @PSBoundParameters
 }
 
 function Format-QueryString($Query) {
