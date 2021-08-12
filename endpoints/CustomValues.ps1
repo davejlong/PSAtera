@@ -1,6 +1,20 @@
 
 <#
   .Synopsis
+  Get a list of all custom fields in Atera
+
+  .Example
+  Get-AteraCustomValues
+  # Get a list of all custom fields
+#>
+function Get-AteraCustomValues {
+  [CmdletBinding()]
+  $uri = "/customvalues/customfields"
+  New-AteraGetRequest -Endpoint $uri -Paginate $false
+}
+
+<#
+  .Synopsis
   Get the value from a custom field in Atera
 
   .Parameter ObjectType
