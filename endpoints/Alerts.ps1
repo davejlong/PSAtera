@@ -88,8 +88,6 @@ function Get-AteraAlertsFiltered {
   Severity of the alert. Defaults to Warning. Options: Information, Warning, Critical
   .Parameter AlertCategoryID
   Category of alert. Defaults to General. Options: Hardware, Disk, Availability, Performance, Exchange, General
-  .Parameter AlertMessage
-  Additional information to show with alert in dashboard
   .Parameter TicketID
   Ticket that alert is assigned to
   .Parameter Code
@@ -148,7 +146,6 @@ function New-AteraAlert {
     [string] $Severity = "Warning",
     [ValidateSet("Hardware","Disk","Availability","Performance","Exchange","General")]
     [string] $AlertCategoryID = "General",
-    [string] $AlertMessage,
     [int] $TicketID,
     # ?
     [int] $Code,
