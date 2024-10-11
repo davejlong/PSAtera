@@ -11,33 +11,47 @@
   Queries tickets with the resolved status
   .Parameter Closed
   Queries tickets with the closed status
+  .Parameter CustomStatuses
+  Queries tickets with custom statuses, ex: -CustomStatuses "Waiting customer,Waiting order"
   .Parameter CustomerID
 #>
 function Get-AteraTickets {
-  param(
-    [Parameter(ParameterSetName="Filtered")]
-    [switch] $Open,
-    [Parameter(ParameterSetName="Filtered")]
-    [switch] $Pending,
-    [Parameter(ParameterSetName="Filtered")]
-    [switch] $Resolved,
-    [Parameter(ParameterSetName="Filtered")]
-    [switch] $Closed,
-    [int] $CustomerID
-  )
-  if ($PSCmdlet.ParameterSetName -ne "Filtered") {
-    $PSBoundParameters["Open"] = $true
-    $PSBoundParameters["Pending"] = $true
-  }
-  $Tickets = @()
-  $Query = @{}
-  if ($PSBoundParameters.ContainsKey("CustomerID")) { $Query.Add("customerId", $CustomerID) }
-  @("Open", "Pending", "Resolved", "Closed") | ForEach-Object {
-    if ($PSBoundParameters[$_]) {
-      $Tickets += New-AteraGetRequest -Endpoint "/tickets" -Query ($Query + @{"ticketStatus" = $_})
+    param(
+        [Parameter(ParameterSetName="Filtered")]
+        [switch] $Open,
+        [Parameter(ParameterSetName="Filtered")]
+        [switch] $Pending,
+        [Parameter(ParameterSetName="Filtered")]
+        [switch] $Resolved,
+        [Parameter(ParameterSetName="Filtered")]
+        [switch] $Closed,
+        [Parameter(ParameterSetName="Filtered")]
+        [string[]] $CustomStatuses,
+        [int] $CustomerID
+    )
+    if ($PSCmdlet.ParameterSetName -ne "Filtered") {
+        $PSBoundParameters["Open"] = $true
+        $PSBoundParameters["Pending"] = $true
     }
-  }
-  $Tickets
+    $Tickets = @()
+    $Query = @{}
+    if ($PSBoundParameters.ContainsKey("CustomerID")) { $Query.Add("customerId", $CustomerID) }
+
+    if ($CustomStatuses) {
+        $CustomStatuses = $CustomStatuses -join ","
+        foreach ($ticketStatus in $CustomStatuses.Split(",")) {
+            if ($ticketStatus) {
+                $Tickets += New-AteraGetRequest -Endpoint "/tickets" -Query ($Query + @{ "ticketStatus" = $ticketStatus })
+            }
+        }
+    }
+
+    @("Open", "Pending", "Resolved", "Closed") | ForEach-Object {
+        if ($PSBoundParameters[$_]) {
+            $Tickets += New-AteraGetRequest -Endpoint "/tickets" -Query ($Query + @{"ticketStatus" = $_})
+        }
+    }
+    $Tickets
 }
 
 <#
