@@ -1052,7 +1052,7 @@ SYNOPSIS
     
     
 SYNTAX
-    New-AteraAlert [-DeviceGuid] <String> [-CustomerID] <Int32> [-Title] <String> [[-Severity] <String>] [[-AlertCategoryID] <String>] [[-AlertMessage] <String>] [[-TicketID] <Int32>] [[-Code] <Int32>] [[-ThresholdValue1] <String>] [[-ThresholdValue2] <String>] [[-ThresholdValue3] <String>] [[-ThresholdValue4] <String>] [[-ThresholdValue5] <String>] [[-SnoozedEndDate] <DateTime>] [[-AdditionalInfo] <String>] [[-MessageTemplate] <String>] [[-FolderID] <Int32>] [<CommonParameters>]
+    New-AteraAlert [-DeviceGuid] <String> [-CustomerID] <Int32> [-Title] <String> [[-Severity] <String>] [[-AlertCategoryID] <String>] [[-TicketID] <Int32>] [[-Code] <Int32>] [[-ThresholdValue1] <String>] [[-ThresholdValue2] <String>] [[-ThresholdValue3] <String>] [[-ThresholdValue4] <String>] [[-ThresholdValue5] <String>] [[-SnoozedEndDate] <DateTime>] [[-AdditionalInfo] <String>] [[-MessageTemplate] <String>] [[-FolderID] <Int32>] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -1073,10 +1073,7 @@ PARAMETERS
         
     -AlertCategoryID <String>
         Category of alert. Defaults to General. Options: Hardware, Disk, Availability, Performance, Exchange, General
-        
-    -AlertMessage <String>
-        Additional information to show with alert in dashboard
-        
+                
     -TicketID <Int32>
         Ticket that alert is assigned to
         
