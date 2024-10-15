@@ -275,7 +275,7 @@ function Set-AteraTicket {
 
 <#
   .Synopsis
-  Adds a comment into a ticket
+  Adds a comment into a ticket, you need to set at least one technician or user ID
 
   .Parameter TicketID
   ID of the ticket to update
@@ -287,7 +287,7 @@ function Set-AteraTicket {
   ID of the technician adding the comment
   .Parameter IsInternal
   If the comment is internal or not (Options: $true, $false, default: $false)
-  .Parameter UserId
+  .Parameter EnduserId
   ID of the user adding the comment
 #>
 function New-AteraTicketComment {
@@ -304,7 +304,7 @@ function New-AteraTicketComment {
     [Parameter()]
     [bool] $IsInternal=$false,
     [Parameter()]
-    [int] $UserId
+    [int] $EnduserId
   )
   $Body = @{}
 
@@ -316,9 +316,11 @@ function New-AteraTicketComment {
     $Body["TechnicianCommentDetails"] = @{}
     if ($TechnicianID -ne "") { $Body.TechnicianCommentDetails.TechnicianID = $TechnicianID }
     $Body.TechnicianCommentDetails.IsInternal = $IsInternal
-  } elseif ($UserId -ne "") {
+  } elseif ($EnduserId -ne "") {
     $Body["EnduserCommentDetails"] = @{}
-    if ($UserId -ne "") { $Body.EnduserCommentDetails.UserId = $UserId }
+    if ($EnduserId -ne "") { $Body.EnduserCommentDetails.EnduserId = $EnduserId }
+  } else {
+    throw "At least one parameter (TechnicianID or EnduserId) needs to be set" 
   }
 
   if (!$Body.Count) { throw "At least one update parameter needs to be set" }
