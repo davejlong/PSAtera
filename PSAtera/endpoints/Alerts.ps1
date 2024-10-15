@@ -88,6 +88,7 @@ function Get-AteraAlertsFiltered {
   Severity of the alert. Defaults to Warning. Options: Information, Warning, Critical
   .Parameter AlertCategoryID
   Category of alert. Defaults to General. Options: Hardware, Disk, Availability, Performance, Exchange, General
+  .Parameter AlertMessage #DEPRECATED - NO USAGE
   .Parameter TicketID
   Ticket that alert is assigned to
   .Parameter Code
@@ -146,6 +147,8 @@ function New-AteraAlert {
     [string] $Severity = "Warning",
     [ValidateSet("Hardware","Disk","Availability","Performance","Exchange","General")]
     [string] $AlertCategoryID = "General",
+    # DEPRECATED
+    [string] $AlertMessage,
     [int] $TicketID,
     # ?
     [int] $Code,
@@ -166,5 +169,10 @@ function New-AteraAlert {
     # ?
     [int] $FolderID
   )
+  if ($PSBoundParameters.ContainsKey("AlertMessage")) {
+    Write-Warning "The AlertMessage parameter is deprecated and will be removed in a future release"
+    # Remove the AlertMessage parameter from the bound parameters
+    $PSBoundParameters.Remove('AlertMessage')
+  }
   New-AteraPostRequest -Endpoint "/alerts" -Body $PSBoundParameters
 }
