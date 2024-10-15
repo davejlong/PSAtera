@@ -272,3 +272,56 @@ function Set-AteraTicket {
 
   New-AteraPostRequest -Endpoint "/tickets/$($TicketID)" -Body $Body
 }
+
+<#
+  .Synopsis
+  Adds a comment into a ticket
+
+  .Parameter TicketID
+  ID of the ticket to update
+  .Parameter CommentText
+  Comment text to add to the ticket
+  .Parameter CommentTimestampUTC
+  UTC timestamp of the comment, ex: 2024-10-15T20:19:01.845Z
+  .Parameter TechnicianID
+  ID of the technician adding the comment
+  .Parameter IsInternal
+  If the comment is internal or not (Options: $true, $false, default: $false)
+  .Parameter UserId
+  ID of the user adding the comment
+#>
+function New-AteraTicketComment {
+  [CmdletBinding()]
+  param (
+    [Parameter(Mandatory)]
+    [string] $TicketID,
+    [Parameter()]
+    [string] $CommentText,
+    [Parameter()]
+    [string] $CommentTimestampUTC,
+    [Parameter()]
+    [int] $TechnicianID,
+    [Parameter()]
+    [bool] $IsInternal=$false,
+    [Parameter()]
+    [int] $UserId
+  )
+  $Body = @{}
+
+  if ($CommentText -ne "") { $Body["CommentText"] = $CommentText }
+  if ($CommentTimestampUTC -ne "") { $Body.CommentTimestampUTC = $CommentTimestampUTC }
+  
+  # We don't set both Technician and User ID
+  if ($TechnicianID -ne "") {
+    $Body["TechnicianCommentDetails"] = @{}
+    if ($TechnicianID -ne "") { $Body.TechnicianCommentDetails.TechnicianID = $TechnicianID }
+    $Body.TechnicianCommentDetails.IsInternal = $IsInternal
+  } elseif ($UserId -ne "") {
+    $Body["EnduserCommentDetails"] = @{}
+    if ($UserId -ne "") { $Body.EnduserCommentDetails.UserId = $UserId }
+  }
+
+  if (!$Body.Count) { throw "At least one update parameter needs to be set" }
+
+  New-AteraPostRequest -Endpoint "/tickets/$($TicketID)/comments" -Body $Body
+}
