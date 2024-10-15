@@ -1,0 +1,26 @@
+name: Lint
+on:
+  push:
+    branches:
+      - master
+      - github-actions
+  pull_request:
+    
+
+jobs:
+  line-with-PSScriptAnalyzer:
+    name: Run PSScriptAnalyzer
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run PSScriptAnalyzer
+        uses: microsoft/psscriptanalyzer-action@v1.0
+        with:
+          path: ./PSAtera/
+          recurse: true
+          settings: ./PSScriptAnalyzerSettings.psd1
+          output: results.sarif
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: results.sarif
+          category: PSScriptAnalyzer
