@@ -67,6 +67,18 @@ function Get-AteraAgent {
     return New-AteraGetRequest -Endpoint "/agents/$AgentID" -Paginate $false
   }
   if($MachineName){
-    return New-AteraGetRequest -Endpoint "/agents/machine/$MachineName"
+    $machines = New-AteraGetRequest -Endpoint "/agents/machine/$MachineName"
+    
+    # if the machine name is the same as the current machine, if we have multiple machines in response,
+    # try to get the real matching one with the serial number
+    if ($MachineName -eq $env:COMPUTERNAME -and $machines.Count -gt 1) {
+      $SerialNumber = (Get-WmiObject -class win32_bios).SerialNumber
+      $foundMachine = $machines | Where-Object { $_.VendorSerialNumber -eq $SerialNumber } | Select-Object -First 1
+      if ($foundMachine) {
+        return $foundMachine
+      }
+    }
+
+    return $machines
   }
 }
