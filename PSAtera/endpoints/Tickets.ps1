@@ -278,11 +278,11 @@ function Set-AteraTicket {
   Adds a comment into a ticket, you need to set at least one technician or user ID
 
   .Parameter TicketID
-  ID of the ticket to update
+  ID of the ticket to update; Mandatory
   .Parameter CommentText
-  Comment text to add to the ticket
+  Comment text to add to the ticket; Mandatory
   .Parameter CommentTimestampUTC
-  UTC timestamp of the comment, ex: 2024-10-15T20:19:01.845Z
+  UTC timestamp of the comment, ex: 2024-10-15T20:19:01.845Z; if not set, the current time will be used
   .Parameter TechnicianID
   ID of the technician adding the comment
   .Parameter IsInternal
@@ -295,7 +295,7 @@ function New-AteraTicketComment {
   param (
     [Parameter(Mandatory)]
     [string] $TicketID,
-    [Parameter()]
+    [Parameter(Mandatory)]
     [string] $CommentText,
     [Parameter()]
     [string] $CommentTimestampUTC,
