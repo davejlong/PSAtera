@@ -12,7 +12,7 @@
 RootModule = 'PSAtera.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.5.9'
+ModuleVersion = '1.6.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -81,7 +81,7 @@ FunctionsToExport = 'Get-AteraAgents', 'Get-AteraAgent', 'Get-AteraAlerts',
                'Get-AteraTicketBillableDuration', 
                'Get-AteraTicketNonBillableDuration', 'Get-AteraTicketWorkHours', 
                'Get-AteraTicketWorkHoursList', 'Get-AteraTicketComments', 
-               'Get-AteraTicketsFiltered', 'New-AteraTicket', 'Set-AteraTicket', 
+               'Get-AteraTicketsFiltered', 'New-AteraTicket', 'New-AteraTicketComment', 'Set-AteraTicket', 
                'Install-AteraAgent', 'Get-AteraAPIKey', 'Set-AteraAPIKey', 
                'Get-AteraRecordLimit', 'Set-AteraRecordLimit', 'New-AteraGetRequest', 
                'New-AteraPostRequest'

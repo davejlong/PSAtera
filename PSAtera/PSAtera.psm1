@@ -73,11 +73,13 @@ function New-AteraPostRequest {
   )
   $Headers = @{
     "accept" = "application/json"
+    "content-type" = "application/json"
     "X-API-KEY" = Get-AteraAPIKey
   }
   $Uri = "https://app.atera.com/api/v3$($endpoint)"
-  Write-Debug "[PSAtera] Request for $Uri with data $Body"
-  $data = Invoke-RestMethod -Uri $Uri -Method "POST" -Headers $Headers -Body $Body
+  $JsonBody = ConvertTo-Json -InputObject $Body -Depth 10
+  Write-Debug "[PSAtera] Request for $Uri with data $JsonBody"
+  $data = Invoke-RestMethod -Uri $Uri -Method "POST" -Headers $Headers -Body ([System.Text.Encoding]::UTF8.GetBytes($JsonBody))
   return $data
 }
 
@@ -111,7 +113,7 @@ function New-AteraPutRequest {
   }
   $Uri = "https://app.atera.com/api/v3$($endpoint)"
   Write-Debug "[PSAtera] Request for $Uri"
-  $JsonBody = ConvertTo-Json -InputObject $Body
+  $JsonBody = ConvertTo-Json -InputObject $Body -Depth 10
   $data = Invoke-RestMethod -Uri $Uri -Method "Put" -Headers $Headers -Body ([System.Text.Encoding]::UTF8.GetBytes($JsonBody))
   return $data
 }
