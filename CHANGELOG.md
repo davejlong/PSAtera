@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.6.0] - 2024/10/16
+### Changed
+- `New-AteraPostRequest` Body is now sent as a JSON
+### Added
+- New function `New-AteraTicketComment`, it adds a comment into a ticket
+
+  ex: `New-AteraTicketComment -TicketID 123 -EnduserId 123 -CommentText "Hello World"`
+
 ## [1.5.9] - 2024/10/15
 ### Fixed
 -  removed parameter in New-AteraAlert made scripts break, we put it back with a deprecated notice
