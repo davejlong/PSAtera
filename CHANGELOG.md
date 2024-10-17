@@ -1,11 +1,17 @@
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
 
 ## [1.7.0] - 2024/10/17
 ### Added
--  `Set-AteraAlert`: Resolve a specified alert. Requires the alert ID.
+-  New function `Set-AteraAlert`: Resolve a specified alert. Requires the alert ID.  
 
+*Sample:*
+```
+Set-AteraAlert -AlertID 1234
+get-AteraAlerts -Open -Information | ForEach-Object { set-AteraAlert -AlertID $_.AlertID }
+```
 ## [1.6.1] - 2024/10/16
 ### Fixed
 -  `Get-AteraAgent`: Kinda fix #11: if we have multiple computers for the current machine, we match on its serial number until Atera gives access to local AgentID
@@ -16,7 +22,10 @@ All notable changes to this project will be documented in this file.
 ### Added
 - New function `New-AteraTicketComment`, it adds a comment into a ticket
 
-  ex: `New-AteraTicketComment -TicketID 123 -EnduserId 123 -CommentText "Hello World"`
+*Sample:* 
+```
+New-AteraTicketComment -TicketID 123 -EnduserId 123 -CommentText "Hello World"
+```
 
 ## [1.5.9] - 2024/10/15
 ### Fixed
