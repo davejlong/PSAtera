@@ -176,3 +176,23 @@ function New-AteraAlert {
   }
   New-AteraPostRequest -Endpoint "/alerts" -Body $PSBoundParameters
 }
+
+<#
+  .Synopsis
+  Resolve a specified alert. Requires the alert ID.
+
+  .Parameter AlertID
+  ID of Alert to resolve
+
+  .Example
+  Set-AteraAlert -AlertID 1234
+  get-AteraAlerts -Open -Information | ForEach-Object { set-AteraAlert -AlertID $_.AlertID }
+#>
+function Set-AteraAlert {
+  [CmdletBinding()]
+  param (
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
+    [string] $AlertID
+  )
+  New-AteraPutRequest -Endpoint "/alerts/$AlertID"
+}

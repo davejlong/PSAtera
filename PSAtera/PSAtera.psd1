@@ -12,7 +12,7 @@
 RootModule = 'PSAtera.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.6.1'
+ModuleVersion = '1.7.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -70,7 +70,7 @@ ScriptsToProcess = 'PostInstall.ps1'
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = 'Get-AteraAgents', 'Get-AteraAgent', 'Get-AteraAlerts', 
-               'Get-AteraAlert', 'Get-AteraAlertsFiltered', 'New-AteraAlert', 
+               'Get-AteraAlert', 'Get-AteraAlertsFiltered', 'Set-AteraAlert', 'New-AteraAlert', 
                'Get-AteraInvoices', 'Get-AteraInvoice', 'Get-AteraContacts', 
                'Get-AteraContact', 'New-AteraContact', 'Get-AteraContracts', 
                'Get-AteraContract', 'Get-AteraCustomers', 'Get-AteraCustomer', 
