@@ -8,8 +8,10 @@ All notable changes to this project will be documented in this file.
 -  New function `Set-AteraAlert`: Resolve a specified alert. Requires the alert ID.  
 
 *Sample:*
-```
+```ps1
+# Resolves alert with 1234 ID
 Set-AteraAlert -AlertID 1234
+# Resolves all Opened Information
 get-AteraAlerts -Open -Information | ForEach-Object { set-AteraAlert -AlertID $_.AlertID }
 ```
 ## [1.6.1] - 2024/10/16
@@ -23,7 +25,8 @@ get-AteraAlerts -Open -Information | ForEach-Object { set-AteraAlert -AlertID $_
 - New function `New-AteraTicketComment`, it adds a comment into a ticket
 
 *Sample:* 
-```
+```ps1
+# Creates a comment for ticket ID 123 and contact's ID 123, with a comment
 New-AteraTicketComment -TicketID 123 -EnduserId 123 -CommentText "Hello World"
 ```
 
