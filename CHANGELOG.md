@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## [1.6.1] - 2024/10/16
 ### Fixed
--  Get-AteraAgent: Kinda fix #11: if we have multiple computers for the current machine, we match on its serial number until Atera gives access to local AgentID
+-  `Get-AteraAgent`: Kinda fix #11: if we have multiple computers for the current machine, we match on its serial number until Atera gives access to local AgentID
 
 ## [1.6.0] - 2024/10/16
 ### Changed
