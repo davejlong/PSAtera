@@ -3,6 +3,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.7.1] - 2025/09/05
+### Fixed
+-  `Get-AteraAgent`: if we have multiple computers matched, sort agents by latest seen agent
+-  `Get-AteraAgent`: we now match the default machine name with the full name (> 15 characters)
+
 ## [1.7.0] - 2024/10/17
 ### Added
 -  New function `Set-AteraAlert`: Resolve a specified alert. Requires the alert ID.  
