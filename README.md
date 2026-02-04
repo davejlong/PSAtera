@@ -8,7 +8,7 @@ Start interacting with Atera from PowerShell with the PSAtera module.
 ## Configuration
 
 The PSAtera module relies on the `ATERAAPIKEY` environment variable for the API key for your Atera account which can be found here:
-https://app.atera.com/new/admin/api
+https://api.atera.com/new/admin/api
 
 ## Install
 
