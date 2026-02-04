@@ -1587,7 +1587,7 @@ DESCRIPTION
 
 PARAMETERS
     -APIKey <String>
-        Atera API Key which can be found at https://app.atera.com/Admin#/admin/api
+        Atera API Key which can be found at https://api.atera.com/Admin#/admin/api
         
     <CommonParameters>
         This cmdlet supports the common parameters: Verbose, Debug,
