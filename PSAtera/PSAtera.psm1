@@ -34,7 +34,7 @@ function New-AteraGetRequest {
   }
   $ItemsInPage = 50
   $QueryString = Format-QueryString -Query $Query
-  $Uri = "https://app.atera.com/api/v3$($endpoint)?itemsInPage=$ItemsInPage&$QueryString"
+  $Uri = "https://api.atera.com/api/v3$($endpoint)?itemsInPage=$ItemsInPage&$QueryString"
   $items = @()
   $index = 0
 
@@ -76,7 +76,7 @@ function New-AteraPostRequest {
     "content-type" = "application/json"
     "X-API-KEY" = Get-AteraAPIKey
   }
-  $Uri = "https://app.atera.com/api/v3$($endpoint)"
+  $Uri = "https://api.atera.com/api/v3$($endpoint)"
   $JsonBody = ConvertTo-Json -InputObject $Body -Depth 10
   Write-Debug "[PSAtera] Request for $Uri with data $JsonBody"
   $data = Invoke-RestMethod -Uri $Uri -Method "POST" -Headers $Headers -Body ([System.Text.Encoding]::UTF8.GetBytes($JsonBody))
@@ -111,7 +111,7 @@ function New-AteraPutRequest {
     "content-type" = "application/json"
     "X-API-KEY" = Get-AteraAPIKey
   }
-  $Uri = "https://app.atera.com/api/v3$($endpoint)"
+  $Uri = "https://api.atera.com/api/v3$($endpoint)"
   Write-Debug "[PSAtera] Request for $Uri"
   $JsonBody = ConvertTo-Json -InputObject $Body -Depth 10
   $data = Invoke-RestMethod -Uri $Uri -Method "Put" -Headers $Headers -Body ([System.Text.Encoding]::UTF8.GetBytes($JsonBody))
@@ -125,7 +125,7 @@ $AteraAPIKey = $env:ATERAAPIKEY
   Set the Atera API Key used by the module. If none set, the ATERAAPIKEY environment variable will be used instead.
 
   .Parameter APIKey
-  Atera API Key which can be found at https://app.atera.com/Admin#/admin/api
+  Atera API Key which can be found at https://api.atera.com/Admin#/admin/api
 #>
 function Set-AteraAPIKey {
   param(
