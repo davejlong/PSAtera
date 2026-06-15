@@ -7,16 +7,21 @@ Start interacting with Atera from PowerShell with the PSAtera module.
 
 ## Configuration
 
-The PSAtera module relies on the `ATERAAPIKEY` environment variable for the API token for your Atera account, which can be found here:
+The PSAtera module relies on the `ATERAAPIKEY` environment variable for the API key or token for your Atera account, which can be found here:
 https://app.atera.com/new/admin/api
 
-You can also set the token at runtime with `Set-AteraAPIKey`.
+You can also set the key at runtime with `Set-AteraAPIKey`.
 
-### API authentication change
+### API authentication
 
-Atera now uses JWT Bearer authentication instead of the legacy `X-API-KEY` header. Recent versions of PSAtera send requests as `Authorization: Bearer {token}`.
+Atera is moving from legacy static API keys (`X-API-KEY` header) to JWT Bearer tokens (`Authorization: Bearer {token}`). Legacy keys remain valid for **60 days** after the change—plan to replace yours with a JWT before that deadline.
 
-**If you upgrade PSAtera, update every script and automation that talks to Atera:** replace your old API key with the new JWT token from the Atera admin portal. The `Set-AteraAPIKey` cmdlet and `ATERAAPIKEY` environment variable names are unchanged—only the token value format has changed.
+PSAtera detects the format automatically based on token length:
+
+- **Short keys** (100 characters or fewer) are sent as `X-API-KEY` for backward compatibility with existing scripts.
+- **Long keys** (more than 100 characters) are sent as `Authorization: Bearer {token}` for the new JWT format.
+
+No code changes are required when upgrading: keep using `Set-AteraAPIKey` and `ATERAAPIKEY` as before. When Atera rotates your credentials to a JWT, PSAtera will switch to Bearer authentication automatically.
 
 ## Install
 

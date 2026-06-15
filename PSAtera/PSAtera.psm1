@@ -111,16 +111,19 @@ function New-AteraPutRequest {
 
 
 $AteraAPIKey = $env:ATERAAPIKEY
+# Legacy static API keys are short; JWT tokens issued by Atera are much longer.
+$script:AteraJwtTokenMinLength = 100
+
 <#
   .Synopsis
-  Set the Atera API token used by the module. If none set, the ATERAAPIKEY environment variable will be used instead.
+  Set the Atera API key or token used by the module. If none set, the ATERAAPIKEY environment variable will be used instead.
 
   .Parameter APIKey
-  Atera JWT token which can be found at https://app.atera.com/new/admin/api
+  Atera API key or JWT token, which can be found at https://app.atera.com/new/admin/api
 #>
 function Set-AteraAPIKey {
   param(
-    # Atera JWT token
+    # Atera API key or JWT token
     [string]$APIKey
   )
   $script:AteraAPIKey = $APIKey
@@ -128,7 +131,7 @@ function Set-AteraAPIKey {
 
 <#
   .Synopsis
-  Get the Atera API token in use by the module.
+  Get the Atera API key or token in use by the module.
 #>
 function Get-AteraAPIKey {
   if (!$AteraAPIKey) { throw "`$AteraAPIKey not set. Set it with either Set-AteraAPIKey or `$env:ATERAAPIKEY" }
@@ -137,13 +140,19 @@ function Get-AteraAPIKey {
 
 <#
   .Synopsis
-  Build request headers for Atera API calls using Bearer JWT authentication.
+  Build request headers for Atera API calls, using Bearer JWT or legacy X-API-KEY authentication.
 #>
 function Get-AteraAuthHeaders {
-  @{
+  $Token = Get-AteraAPIKey
+  $Headers = @{
     "accept" = "application/json"
-    "Authorization" = "Bearer $(Get-AteraAPIKey)"
   }
+  if ($Token.Length -gt $AteraJwtTokenMinLength) {
+    $Headers["Authorization"] = "Bearer $Token"
+  } else {
+    $Headers["X-API-KEY"] = $Token
+  }
+  return $Headers
 }
 
 $RecordLimit = 1000
