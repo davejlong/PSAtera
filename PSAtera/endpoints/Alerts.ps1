@@ -196,3 +196,16 @@ function Set-AteraAlert {
   )
   New-AteraPutRequest -Endpoint "/alerts/$AlertID"
 }
+
+<#
+  .Synopsis
+  Delete a specified alert.
+#>
+function Remove-AteraAlert {
+  [CmdletBinding()]
+  param (
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
+    [string] $AlertID
+  )
+  New-AteraDeleteRequest -Endpoint "/alerts/$AlertID"
+}

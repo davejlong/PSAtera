@@ -83,3 +83,42 @@ function Get-AteraAgent {
     return $machines | Sort-Object LastSeen -Descending
   }
 }
+
+<#
+  .Synopsis
+  Get installed patches for an agent.
+#>
+function Get-AteraAgentInstalledPatches {
+  [CmdletBinding()]
+  param(
+    [Parameter(Mandatory)]
+    [string] $DeviceGuid
+  )
+  New-AteraGetRequest -Endpoint "/agents/$DeviceGuid/installed-patches" -Paginate $false
+}
+
+<#
+  .Synopsis
+  Get available patches for an agent.
+#>
+function Get-AteraAgentAvailablePatches {
+  [CmdletBinding()]
+  param(
+    [Parameter(Mandatory)]
+    [string] $DeviceGuid
+  )
+  New-AteraGetRequest -Endpoint "/agents/$DeviceGuid/available-patches" -Paginate $false
+}
+
+<#
+  .Synopsis
+  Delete an agent.
+#>
+function Remove-AteraAgent {
+  [CmdletBinding()]
+  param(
+    [Parameter(Mandatory)]
+    [int] $AgentID
+  )
+  New-AteraDeleteRequest -Endpoint "/agents/$AgentID"
+}

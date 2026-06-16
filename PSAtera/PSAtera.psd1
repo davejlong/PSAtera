@@ -12,7 +12,7 @@
 RootModule = 'PSAtera.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.7.1'
+ModuleVersion = '1.8.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -69,22 +69,33 @@ ScriptsToProcess = 'PostInstall.ps1'
 # NestedModules = @()
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = 'Get-AteraAgents', 'Get-AteraAgent', 'Get-AteraAlerts', 
-               'Get-AteraAlert', 'Get-AteraAlertsFiltered', 'Set-AteraAlert', 'New-AteraAlert', 
-               'Get-AteraInvoices', 'Get-AteraInvoice', 'Get-AteraContacts', 
-               'Get-AteraContact', 'New-AteraContact', 'Get-AteraContracts', 
-               'Get-AteraContract', 'Get-AteraCustomers', 'Get-AteraCustomer', 
-               'New-AteraCustomer', 'Get-AteraCustomValues', 'Get-AteraCustomValue', 'Set-AteraCustomValue', 
-               'Get-AteraKnowledgebase', 'Get-AteraProducts', 'Get-AteraExpenses', 
-               'Get-AteraProduct', 'Get-AteraExpense', 'New-AteraProduct', 
-               'New-AteraExpense', 'Get-AteraTickets', 'Get-AteraTicket', 
-               'Get-AteraTicketBillableDuration', 
-               'Get-AteraTicketNonBillableDuration', 'Get-AteraTicketWorkHours', 
-               'Get-AteraTicketWorkHoursList', 'Get-AteraTicketComments', 
-               'Get-AteraTicketsFiltered', 'New-AteraTicket', 'New-AteraTicketComment', 'Set-AteraTicket', 
-               'Install-AteraAgent', 'Get-AteraAPIKey', 'Set-AteraAPIKey', 
-               'Get-AteraRecordLimit', 'Set-AteraRecordLimit', 'New-AteraGetRequest', 
-               'New-AteraPostRequest'
+FunctionsToExport = 'Add-AteraTicketRelation', 'Get-AteraAccount', 'Get-AteraAgent',
+               'Get-AteraAgentAvailablePatches', 'Get-AteraAgentInstalledPatches', 'Get-AteraAgents',
+               'Get-AteraAlert', 'Get-AteraAlerts', 'Get-AteraAlertsFiltered', 'Get-AteraAPIKey',
+               'Get-AteraContact', 'Get-AteraContacts', 'Get-AteraContract', 'Get-AteraContracts',
+               'Get-AteraCustomer', 'Get-AteraCustomers', 'Get-AteraCustomValue', 'Get-AteraCustomValueById',
+               'Get-AteraCustomValues', 'Get-AteraCustomValuesForObject', 'Get-AteraDepartment',
+               'Get-AteraDepartments', 'Get-AteraExpense', 'Get-AteraExpenses', 'Get-AteraGenericDevice',
+               'Get-AteraGenericDevices', 'Get-AteraHttpDevice', 'Get-AteraHttpDevices', 'Get-AteraInvoice',
+               'Get-AteraInvoices', 'Get-AteraKnowledgebase', 'Get-AteraProduct', 'Get-AteraProducts',
+               'Get-AteraRecordLimit', 'Get-AteraSnmpDevice', 'Get-AteraSnmpDeviceByGuid', 'Get-AteraSnmpDevices',
+               'Get-AteraTcpDevice', 'Get-AteraTcpDevices', 'Get-AteraTicket', 'Get-AteraTicketAttachments',
+               'Get-AteraTicketBillableDuration', 'Get-AteraTicketComments', 'Get-AteraTicketNonBillableDuration',
+               'Get-AteraTickets', 'Get-AteraTicketsByLastModified', 'Get-AteraTicketsByStatusModified',
+               'Get-AteraTicketsFiltered', 'Get-AteraTicketsWithoutComments', 'Get-AteraTicketWorkHours',
+               'Get-AteraTicketWorkHoursList', 'Get-AteraWorkHours', 'Install-AteraAgent', 'New-AteraAlert',
+               'New-AteraContact', 'New-AteraContract', 'New-AteraCustomer', 'New-AteraCustomerAttachment',
+               'New-AteraCustomerFolder', 'New-AteraCustomValue', 'New-AteraDeleteRequest', 'New-AteraDepartment',
+               'New-AteraExpense', 'New-AteraGenericDevice', 'New-AteraGetRequest', 'New-AteraHttpDevice',
+               'New-AteraPostRequest', 'New-AteraProduct', 'New-AteraPutRequest', 'New-AteraSnmpDeviceV1V2',
+               'New-AteraSnmpDeviceV3', 'New-AteraTcpDevice', 'New-AteraTicket', 'New-AteraTicketComment',
+               'New-AteraTicketWorkHours', 'Remove-AteraAgent', 'Remove-AteraAlert', 'Remove-AteraContact',
+               'Remove-AteraCustomer', 'Remove-AteraDepartment', 'Remove-AteraExpense', 'Remove-AteraGenericDevice',
+               'Remove-AteraHttpDevice', 'Remove-AteraProduct', 'Remove-AteraSnmpDevice', 'Remove-AteraTcpDevice',
+               'Remove-AteraTicket', 'Remove-AteraTicketRelation', 'Set-AteraAlert', 'Set-AteraAPIKey',
+               'Set-AteraContact', 'Set-AteraContract', 'Set-AteraCustomer', 'Set-AteraCustomValue',
+               'Set-AteraDepartment', 'Set-AteraExpense', 'Set-AteraProduct', 'Set-AteraRecordLimit',
+               'Set-AteraTicket'
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 CmdletsToExport = @()

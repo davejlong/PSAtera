@@ -98,3 +98,59 @@ function New-AteraExpense {
   )
   New-AteraPostRequest -Endpoint "/rates/expenses" -Body $PSBoundParameters
 }
+
+<#
+  .Synopsis
+  Update a product.
+#>
+function Set-AteraProduct {
+  [CmdletBinding()]
+  param (
+    [Parameter(Mandatory)]
+    [int] $ProductID,
+    [Parameter(Mandatory)]
+    [Hashtable] $Body
+  )
+  New-AteraPutRequest -Endpoint "/rates/products/$ProductID" -Body $Body
+}
+
+<#
+  .Synopsis
+  Delete a product.
+#>
+function Remove-AteraProduct {
+  [CmdletBinding()]
+  param (
+    [Parameter(Mandatory)]
+    [int] $ProductID
+  )
+  New-AteraDeleteRequest -Endpoint "/rates/products/$ProductID"
+}
+
+<#
+  .Synopsis
+  Update an expense.
+#>
+function Set-AteraExpense {
+  [CmdletBinding()]
+  param (
+    [Parameter(Mandatory)]
+    [int] $ExpenseID,
+    [Parameter(Mandatory)]
+    [Hashtable] $Body
+  )
+  New-AteraPutRequest -Endpoint "/rates/expenses/$ExpenseID" -Body $Body
+}
+
+<#
+  .Synopsis
+  Delete an expense.
+#>
+function Remove-AteraExpense {
+  [CmdletBinding()]
+  param (
+    [Parameter(Mandatory)]
+    [int] $ExpenseID
+  )
+  New-AteraDeleteRequest -Endpoint "/rates/expenses/$ExpenseID"
+}

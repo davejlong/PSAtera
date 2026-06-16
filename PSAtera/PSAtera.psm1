@@ -109,6 +109,30 @@ function New-AteraPutRequest {
   return $data
 }
 
+<#
+  .Synopsis
+  Generic command for making DELETE requests against the Atera API
+
+  .Parameter Endpoint
+  Endpoint to request, beginning with a /
+
+  .Example
+  New-AteraDeleteRequest -Endpoint "/tickets/1234"
+  # Delete ticket 1234
+#>
+function New-AteraDeleteRequest {
+  [CmdletBinding()]
+  param (
+    [Parameter(Mandatory)]
+    [string] $Endpoint
+  )
+  $Headers = Get-AteraAuthHeaders
+  $Uri = "https://app.atera.com/api/v3$($endpoint)"
+  Write-Debug "[PSAtera] Request for $Uri"
+  $data = Invoke-RestMethod -Uri $Uri -Method "DELETE" -Headers $Headers
+  return $data
+}
+
 
 $AteraAPIKey = $env:ATERAAPIKEY
 # Legacy static API keys are short; JWT tokens issued by Atera are much longer.
@@ -234,4 +258,4 @@ function Format-QueryString($Query) {
 
 Get-ChildItem -Path $PSScriptRoot/endpoints | ForEach-Object { . $_.PSPath }
 
-Export-ModuleMember -Function Install-AteraAgent,Get-Atera*,Set-Atera*,New-Atera*
+Export-ModuleMember -Function Install-AteraAgent,Get-Atera*,Set-Atera*,New-Atera*,Remove-Atera*,Add-Atera*
