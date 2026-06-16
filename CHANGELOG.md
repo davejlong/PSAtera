@@ -3,6 +3,34 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.8.0] - 2026/06/16
+### Added
+- API authentication now supports Atera JWT Bearer tokens in addition to legacy `X-API-KEY` headers. The module detects the format automatically by token length (short keys use `X-API-KEY`, keys longer than 100 characters use `Authorization: Bearer {token}`). Existing scripts using `Set-AteraAPIKey` or `ATERAAPIKEY` require no code changes.
+- New generic request helper `New-AteraDeleteRequest` for DELETE operations against the API.
+- `Get-AteraAccount` — account information (`GET /account`).
+- `Get-AteraWorkHours` — workhour records with optional date and rate filters.
+- **Departments:** `Get-AteraDepartments`, `Get-AteraDepartment`, `New-AteraDepartment`, `Set-AteraDepartment`, `Remove-AteraDepartment`.
+- **Devices:** Generic, TCP, HTTP, and SNMP device cmdlets including list, get, create, and delete operations; `Get-AteraSnmpDeviceByGuid`, `New-AteraSnmpDeviceV1V2`, `New-AteraSnmpDeviceV3`.
+- **Tickets:** `Get-AteraTicketsWithoutComments`, `Get-AteraTicketsByStatusModified`, `Get-AteraTicketsByLastModified`, `Get-AteraTicketAttachments`, `New-AteraTicketWorkHours`, `Add-AteraTicketRelation`, `Remove-AteraTicketRelation`, `Remove-AteraTicket`.
+- **Customers:** `Set-AteraCustomer`, `Remove-AteraCustomer`, `New-AteraCustomerFolder`, `New-AteraCustomerAttachment`.
+- **Contacts:** `Set-AteraContact`, `Remove-AteraContact`.
+- **Contracts:** `New-AteraContract`, `Set-AteraContract`.
+- **Rates:** `Set-AteraProduct`, `Remove-AteraProduct`, `Set-AteraExpense`, `Remove-AteraExpense`.
+- **Agents:** `Get-AteraAgentInstalledPatches`, `Get-AteraAgentAvailablePatches`, `Remove-AteraAgent`.
+- **Alerts:** `Remove-AteraAlert`.
+- **Custom values:** `Get-AteraCustomValuesForObject`, `New-AteraCustomValue`, `Get-AteraCustomValueById`.
+
+### Fixed
+- `Set-AteraTicket`: `-TicketTitle` was ignored due to a typo in the parameter check (`$TickeTitle`).
+
+### Changed
+- Module exports now include `Remove-Atera*` and `Add-Atera*` cmdlets in addition to existing `Get-Atera*`, `Set-Atera*`, and `New-Atera*` patterns.
+- `New-AteraPutRequest` and `New-AteraDeleteRequest` are included in the published function list.
+
+### Notes
+- Legacy API keys remain supported during Atera's transition period. Replace your key with a JWT from the Atera admin portal before legacy keys expire.
+- Do not prefix the token with `Bearer ` in `ATERAAPIKEY` or `Set-AteraAPIKey`; the module adds the scheme automatically for JWT tokens.
+
 ## [1.7.1] - 2025/09/05
 ### Fixed
 -  `Get-AteraAgent`: if we have multiple computers matched, sort agents by latest seen agent

@@ -74,3 +74,44 @@ function New-AteraContact {
   )
   New-AteraPostRequest -Endpoint "/contacts" -Body $PSBoundParameters
 }
+
+<#
+  .Synopsis
+  Update an existing contact.
+#>
+function Set-AteraContact {
+  [CmdletBinding()]
+  param (
+    [Parameter(Mandatory)]
+    [int] $ContactID,
+    [Parameter()]
+    [string] $FirstName,
+    [Parameter()]
+    [string] $LastName,
+    [Parameter()]
+    [string] $JobTitle,
+    [Parameter()]
+    [string] $Phone,
+    [Parameter()]
+    [bool] $IsContactPerson,
+    [Parameter()]
+    [string] $InIgnoreMode
+  )
+  $Body = @{} + $PSBoundParameters
+  $null = $Body.Remove("ContactID")
+  if (!$Body.Count) { throw "At least one update parameter needs to be set" }
+  New-AteraPutRequest -Endpoint "/contacts/$ContactID" -Body $Body
+}
+
+<#
+  .Synopsis
+  Delete an existing contact.
+#>
+function Remove-AteraContact {
+  [CmdletBinding()]
+  param (
+    [Parameter(Mandatory)]
+    [int] $ContactID
+  )
+  New-AteraDeleteRequest -Endpoint "/contacts/$ContactID"
+}

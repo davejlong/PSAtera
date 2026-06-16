@@ -28,3 +28,31 @@ function Get-AteraContract {
   )
   return New-AteraGetRequest -Endpoint "/contracts/$ContractID" -Paginate $false
 }
+
+<#
+  .Synopsis
+  Create a new contract.
+#>
+function New-AteraContract {
+  [CmdletBinding()]
+  param (
+    [Parameter(Mandatory)]
+    [Hashtable] $Body
+  )
+  New-AteraPostRequest -Endpoint "/contracts" -Body $Body
+}
+
+<#
+  .Synopsis
+  Update an existing contract.
+#>
+function Set-AteraContract {
+  [CmdletBinding()]
+  param (
+    [Parameter(Mandatory)]
+    [int] $ContractID,
+    [Parameter(Mandatory)]
+    [Hashtable] $Body
+  )
+  New-AteraPutRequest -Endpoint "/contracts/$ContractID" -Body $Body
+}

@@ -83,3 +83,55 @@ function Set-AteraCustomValue {
   $uri = "/customvalues/$($ObjectType.ToLower())field/$ObjectID/$FieldName"
   New-AteraPutRequest -Endpoint $uri -Body @{Value=$Value}
 }
+
+<#
+  .Synopsis
+  Get all custom values for a specific object.
+#>
+function Get-AteraCustomValuesForObject {
+  [CmdletBinding()]
+  param (
+    [Parameter(Mandatory)]
+    [ValidateSet("Ticket", "Customer", "Contact", "Contract", "SLA", "Agent", "SNMP", "TCP", "HTTP", "Generic")]
+    [string] $ObjectType,
+    [Parameter(Mandatory)]
+    [int] $ObjectID
+  )
+  $uri = "/customvalues/$($ObjectType.ToLower())fields/$ObjectID"
+  New-AteraGetRequest -Endpoint $uri -Paginate $false
+}
+
+<#
+  .Synopsis
+  Create a value for a custom field.
+#>
+function New-AteraCustomValue {
+  [CmdletBinding()]
+  param (
+    [Parameter(Mandatory)]
+    [ValidateSet("Ticket", "Customer", "Contact", "Contract", "SLA", "Agent", "SNMP", "TCP", "HTTP", "Generic")]
+    [string] $ObjectType,
+    [Parameter(Mandatory)]
+    [int] $ObjectID,
+    [Parameter(Mandatory)]
+    [string] $FieldName,
+    [Parameter()]
+    [string] $Value = ""
+  )
+  $FieldName = [uri]::EscapeDataString($FieldName)
+  $uri = "/customvalues/$($ObjectType.ToLower())field/$ObjectID/$FieldName"
+  New-AteraPostRequest -Endpoint $uri -Body @{ Value = $Value }
+}
+
+<#
+  .Synopsis
+  Get custom value records by custom value ID.
+#>
+function Get-AteraCustomValueById {
+  [CmdletBinding()]
+  param (
+    [Parameter(Mandatory)]
+    [string] $CustomValueID
+  )
+  New-AteraGetRequest -Endpoint "/customvalues/$CustomValueID" -Paginate $false
+}

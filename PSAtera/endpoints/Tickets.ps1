@@ -56,6 +56,90 @@ function Get-AteraTickets {
 
 <#
   .Synopsis
+  Get tickets without comments.
+
+  .Parameter CustomerID
+  Optional customer ID filter.
+
+  .Parameter TicketStatus
+  Optional ticket status filter.
+
+  .Parameter IncludeRelations
+  Include related ticket metadata.
+#>
+function Get-AteraTicketsWithoutComments {
+  [CmdletBinding()]
+  param(
+    [Parameter()]
+    [int] $CustomerID,
+    [Parameter()]
+    [string] $TicketStatus,
+    [Parameter()]
+    [bool] $IncludeRelations = $false
+  )
+  $Query = @{ includeRelations = $IncludeRelations }
+  if ($PSBoundParameters.ContainsKey("CustomerID")) { $Query.customerId = $CustomerID }
+  if ($PSBoundParameters.ContainsKey("TicketStatus")) { $Query.ticketStatus = $TicketStatus }
+  return New-AteraGetRequest -Endpoint "/tickets/noComments" -Query $Query
+}
+
+<#
+  .Synopsis
+  Get resolved and closed tickets sorted by status modification date.
+
+  .Parameter IncludeComments
+  Include first/last comment details.
+
+  .Parameter IncludeRelations
+  Include related ticket metadata.
+#>
+function Get-AteraTicketsByStatusModified {
+  [CmdletBinding()]
+  param(
+    [Parameter()]
+    [bool] $IncludeComments = $true,
+    [Parameter()]
+    [bool] $IncludeRelations = $false
+  )
+  return New-AteraGetRequest -Endpoint "/tickets/statusmodified" -Query @{
+    includeComments = $IncludeComments
+    includeRelations = $IncludeRelations
+  }
+}
+
+<#
+  .Synopsis
+  Get tickets ordered by last modified date.
+
+  .Parameter Date
+  UTC date filter in ISO 8601 format.
+
+  .Parameter IncludeComments
+  Include the ticket's latest comments.
+
+  .Parameter IncludeRelations
+  Include related ticket metadata.
+#>
+function Get-AteraTicketsByLastModified {
+  [CmdletBinding()]
+  param(
+    [Parameter()]
+    [string] $Date,
+    [Parameter()]
+    [bool] $IncludeComments = $false,
+    [Parameter()]
+    [bool] $IncludeRelations = $false
+  )
+  $Query = @{
+    includeComments = $IncludeComments
+    includeRelations = $IncludeRelations
+  }
+  if ($PSBoundParameters.ContainsKey("Date")) { $Query.date = $Date }
+  return New-AteraGetRequest -Endpoint "/tickets/lastmodified" -Query $Query
+}
+
+<#
+  .Synopsis
   Get a single ticket by it's ID
 
   .Parameter TicketID
@@ -135,6 +219,21 @@ function Get-AteraTicketComments {
     [int]$TicketID
   )
   return New-AteraGetRequest -Endpoint "/tickets/$TicketID/comments"
+}
+
+<#
+  .Synopsis
+  Get all attachment URLs on a ticket.
+
+  .Parameter TicketID
+  ID of ticket to retrieve.
+#>
+function Get-AteraTicketAttachments {
+  param(
+    [Parameter(Mandatory)]
+    [int]$TicketID
+  )
+  return New-AteraGetRequest -Endpoint "/tickets/$TicketID/attachments" -Paginate $false
 }
 
 <#
@@ -262,7 +361,7 @@ function Set-AteraTicket {
     [int] $TechnicianContactID
   )
   $Body = @{}
-  if ($TickeTitle -ne "") { $Body["TicketTitle"] = $TicketTitle }
+  if ($TicketTitle -ne "") { $Body["TicketTitle"] = $TicketTitle }
   if ($TicketStatus -ne "") { $Body.TicketStatus = $TicketStatus }
   if ($TicketType -ne "") { $Body.TicketType = $TicketType }
   if ($TicketPriority -ne "") { $Body.TicketPriority = $TicketPriority }
@@ -271,6 +370,22 @@ function Set-AteraTicket {
   if (!$Body.Count) { throw "At least one update parameter needs to be set" }
 
   New-AteraPostRequest -Endpoint "/tickets/$($TicketID)" -Body $Body
+}
+
+<#
+  .Synopsis
+  Delete a ticket.
+
+  .Parameter TicketID
+  Ticket ID to delete.
+#>
+function Remove-AteraTicket {
+  [CmdletBinding()]
+  param (
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
+    [int] $TicketID
+  )
+  New-AteraDeleteRequest -Endpoint "/tickets/$TicketID"
 }
 
 <#
@@ -326,4 +441,70 @@ function New-AteraTicketComment {
   if (!$Body.Count) { throw "At least one update parameter needs to be set" }
 
   New-AteraPostRequest -Endpoint "/tickets/$($TicketID)/comments" -Body $Body
+}
+
+<#
+  .Synopsis
+  Add work hours entry to a ticket.
+#>
+function New-AteraTicketWorkHours {
+  [CmdletBinding()]
+  param (
+    [Parameter(Mandatory)]
+    [int] $TicketID,
+    [Parameter(Mandatory)]
+    [string] $StartWorkHour,
+    [Parameter(Mandatory)]
+    [string] $EndWorkHour,
+    [Parameter()]
+    [int] $TechnicianContactID,
+    [Parameter()]
+    [string] $TechnicianEmail,
+    [Parameter()]
+    [bool] $Billiable = $true,
+    [Parameter()]
+    [bool] $OnCustomerSite = $false,
+    [Parameter()]
+    [string] $Comments
+  )
+  $Body = @{} + $PSBoundParameters
+  $null = $Body.Remove("TicketID")
+  New-AteraPostRequest -Endpoint "/tickets/$TicketID/workhours" -Body $Body
+}
+
+<#
+  .Synopsis
+  Link a ticket relation as Parent or Child.
+#>
+function Add-AteraTicketRelation {
+  [CmdletBinding()]
+  param(
+    [Parameter(Mandatory)]
+    [int] $TicketID,
+    [Parameter(Mandatory)]
+    [int] $RelatedTicketId,
+    [Parameter(Mandatory)]
+    [ValidateSet("Parent", "Child")]
+    [string] $RelationType
+  )
+  New-AteraPostRequest -Endpoint "/tickets/$TicketID/relations" -Body @{
+    RelatedTicketId = $RelatedTicketId
+    RelationType = $RelationType
+  }
+}
+
+<#
+  .Synopsis
+  Remove a Parent or Child ticket relation.
+#>
+function Remove-AteraTicketRelation {
+  [CmdletBinding()]
+  param(
+    [Parameter(Mandatory)]
+    [int] $TicketID,
+    [Parameter(Mandatory)]
+    [ValidateSet("Parent", "Child")]
+    [string] $RelationType
+  )
+  New-AteraDeleteRequest -Endpoint "/tickets/$TicketID/relations/$RelationType"
 }
